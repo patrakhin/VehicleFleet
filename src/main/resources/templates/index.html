@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vehicle List</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Index</h1>
+
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Number Vehicle</th>
+        <th>Price</th>
+        <th>Year of Manufacture</th>
+        <th>Mileage</th>
+        <th>Equipment Type</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="vehicle : ${vehicles}">
+        <td th:text="${vehicle.id}"></td>
+        <td th:text="${vehicle.numberVehicle}"></td>
+        <td th:text="${vehicle.price}"></td>
+        <td th:text="${vehicle.yearOfManufacture}"></td>
+        <td th:text="${vehicle.mileage}"></td>
+        <td th:text="${vehicle.equipmentType}"></td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>
