@@ -5,7 +5,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "vehicle")
-public class Vehicle {
+public class Vehicles {
 
     @Id
     @Column(name = "id")
@@ -27,9 +27,9 @@ public class Vehicle {
     @Enumerated(EnumType.STRING)
     private EquipmentType equipmentType;
 
-    public Vehicle(){}
+    public Vehicles(){}
 
-    public Vehicle(String numberVehicle, double price, int yearOfManufacture, int mileage, EquipmentType equipmentType) {
+    public Vehicles(String numberVehicle, double price, int yearOfManufacture, int mileage, EquipmentType equipmentType) {
         this.numberVehicle = numberVehicle;
         this.price = price;
         this.yearOfManufacture = yearOfManufacture;
