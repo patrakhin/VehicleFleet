@@ -39,13 +39,13 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="vehicle : ${vehicles}">
-        <td th:text="${vehicle.id}"></td>
-        <td th:text="${vehicle.numberVehicle}"></td>
-        <td th:text="${vehicle.price}"></td>
-        <td th:text="${vehicle.yearOfManufacture}"></td>
-        <td th:text="${vehicle.mileage}"></td>
-        <td th:text="${vehicle.equipmentType}"></td>
+    <tr th:each="vehicles : ${allVehicles}">
+        <td th:text="${vehicles.id}"></td>
+        <td th:text="${vehicles.numberVehicle}"></td>
+        <td th:text="${vehicles.price}"></td>
+        <td th:text="${vehicles.yearOfManufacture}"></td>
+        <td th:text="${vehicles.mileage}"></td>
+        <td th:text="${vehicles.equipmentType}"></td>
     </tr>
     </tbody>
 </table>
