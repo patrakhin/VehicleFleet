@@ -1,6 +1,7 @@
 package ru.patrakhin.VehicleFleet.models;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "car_brand")
@@ -12,6 +13,7 @@ public class CarBrand {
     private Long id;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "brand_name")
     private BrandName brandName;
 
     @Column(name = "car_type")
@@ -28,6 +30,9 @@ public class CarBrand {
 
     @Column(name = "max_speed")
     private int maxSpeed;
+
+    @OneToMany(mappedBy = "carBrand")
+    private List<Vehicles> vehicles;
 
     public CarBrand(){}
 
@@ -48,11 +53,11 @@ public class CarBrand {
         this.id = id;
     }
 
-    public String getBrandName() {
+    public BrandName getBrandName() {
         return brandName;
     }
 
-    public void setBrandName(String brandName) {
+    public void setBrandName(BrandName brandName) {
         this.brandName = brandName;
     }
 
@@ -94,6 +99,14 @@ public class CarBrand {
 
     public void setMaxSpeed(int maxSpeed) {
         this.maxSpeed = maxSpeed;
+    }
+
+    public List<Vehicles> getVehicles() {
+        return vehicles;
+    }
+
+    public void setVehicles(List<Vehicles> vehicles) {
+        this.vehicles = vehicles;
     }
 
     @Override

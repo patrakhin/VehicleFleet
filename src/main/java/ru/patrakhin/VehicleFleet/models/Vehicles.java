@@ -25,7 +25,12 @@ public class Vehicles {
     private int mileage;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "equipment_type")
     private EquipmentType equipmentType;
+
+    @ManyToOne
+    @JoinColumn(name = "car_brand_id", referencedColumnName = "id")
+    private CarBrand carBrand;
 
     public Vehicles(){}
 
@@ -83,6 +88,14 @@ public class Vehicles {
 
     public void setEquipmentType(EquipmentType equipmentType) {
         this.equipmentType = equipmentType;
+    }
+
+    public CarBrand getCarBrand() {
+        return carBrand;
+    }
+
+    public void setCarBrand(CarBrand carBrand) {
+        this.carBrand = carBrand;
     }
 
     @Override
