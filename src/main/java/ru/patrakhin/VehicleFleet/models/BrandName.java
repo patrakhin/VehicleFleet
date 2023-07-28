@@ -1,5 +1,5 @@
 package ru.patrakhin.VehicleFleet.models;
 
 public enum BrandName {
-    TOYOTA, BMW, FORD, HONDA, MERCEDES;
+    MERCEDES, TOYOTA, BMW, FORD, AUDI;
 }

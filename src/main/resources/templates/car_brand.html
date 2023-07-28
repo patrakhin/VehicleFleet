@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Car Brands</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Car Brands</h1>
+
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Brand Name</th>
+        <th>Car Type</th>
+        <th>Fuel Tank Volume</th>
+        <th>Carrying Capacity</th>
+        <th>Number of Seats</th>
+        <th>Max Speed</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="brand : ${carBrands}">
+        <td th:text="${brand.id}"></td>
+        <td th:text="${brand.brandName}"></td>
+        <td th:text="${brand.carType}"></td>
+        <td th:text="${brand.fuelTankVolume}"></td>
+        <td th:text="${brand.carryingCapacity}"></td>
+        <td th:text="${brand.numberOfSeats}"></td>
+        <td th:text="${brand.maxSpeed}"></td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

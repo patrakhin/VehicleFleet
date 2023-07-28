@@ -1,5 +1,5 @@
 package ru.patrakhin.VehicleFleet.models;
 
 public enum EquipmentType {
-    BASIC, MEDIUM, MAXIMUM
+    BASIC, MEDIUM, MAXIMUM, PREMIUM, SPORT
 }

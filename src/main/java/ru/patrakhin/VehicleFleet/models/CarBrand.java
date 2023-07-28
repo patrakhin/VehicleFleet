@@ -10,12 +10,13 @@ public class CarBrand {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "brand_name")
     private BrandName brandName;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "car_type")
     private CarType carType;
 
@@ -45,11 +46,11 @@ public class CarBrand {
         this.maxSpeed = maxSpeed;
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
