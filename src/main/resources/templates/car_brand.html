@@ -48,9 +48,16 @@
         <td th:text="${brand.carryingCapacity}"></td>
         <td th:text="${brand.numberOfSeats}"></td>
         <td th:text="${brand.maxSpeed}"></td>
+        <td>
+            <a th:href="@{/edit_car_brand/{id}(id=${brand.id})}">Edit</a>
+            <a th:href="@{/delete_car_brand/{id}(id=${brand.id})}">Delete</a>
+        </td>
     </tr>
     </tbody>
 </table>
+<a th:href="@{/index}">View Vehicles</a>
+<a th:href="@{/start_page}">Back to Start Page</a>
+<a th:href="@{/create_car_brand}">Add New Car Brand</a>
 
 </body>
 </html>

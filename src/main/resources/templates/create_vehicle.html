@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Vehicle</title>
+</head>
+<body>
+<h1>Create Vehicle</h1>
+<form action="/save_vehicle" method="post">
+    <label for="carBrand">Car Brand:</label>
+    <select id="carBrand" name="carBrand" required>
+        <option th:each="carBrand : ${carBrands}"
+                th:value="${carBrand.id}" th:text="${carBrand.brandName}"></option>
+    </select><br/><br/>
+
+    <label for="equipmentType">Equipment Type:</label>
+    <input type="text" id="equipmentType" name="equipmentType" required /><br/><br/>
+
+    <label for="mileage">Mileage:</label>
+    <input type="number" id="mileage" name="mileage" required /><br/><br/>
+
+    <label for="numberVehicle">Number Vehicle:</label>
+    <input type="text" id="numberVehicle" name="numberVehicle" required /><br/><br/>
+
+    <label for="price">Price:</label>
+    <input type="number" id="price" name="price" required /><br/><br/>
+
+    <label for="yearOfManufacture">Year of Manufacture:</label>
+    <input type="number" id="yearOfManufacture" name="yearOfManufacture" required /><br/><br/>
+
+    <button type="submit">Create</button>
+</form>
+<br/><br/>
+<a href="/index">Back to Vehicles</a>
+<br/><br/>
+<a href="/car_brand">Back to Car Brands</a>
+<br/><br/>
+<a href="/start_page">Back to Start Page</a>
+</body>
+</html>
