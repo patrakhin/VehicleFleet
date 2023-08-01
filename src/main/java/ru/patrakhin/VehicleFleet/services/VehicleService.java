@@ -3,11 +3,13 @@ package ru.patrakhin.VehicleFleet.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.patrakhin.VehicleFleet.dto.VehiclesDTO;
 import ru.patrakhin.VehicleFleet.models.Vehicles;
 import ru.patrakhin.VehicleFleet.repositories.VehicleRepository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional(readOnly = true)
@@ -19,13 +21,16 @@ public class VehicleService {
         this.vehicleRepository = vehicleRepository;
     }
 
-    public List<Vehicles> findAll(){
-        return vehicleRepository.findAll();
+    public List<VehiclesDTO> getAllVehicles() {
+        List<Vehicles> vehiclesList = vehicleRepository.findAll();
+        return vehiclesList.stream()
+                .map(VehiclesDTO::new)
+                .collect(Collectors.toList());
     }
 
     public Vehicles findOne(int id) {
-        Optional<Vehicles> foundPerson = vehicleRepository.findById(id);
-        return foundPerson.orElse(null);
+        Optional<Vehicles> foundVehicle = vehicleRepository.findById(id);
+        return foundVehicle.orElse(null);
     }
 
     @Transactional

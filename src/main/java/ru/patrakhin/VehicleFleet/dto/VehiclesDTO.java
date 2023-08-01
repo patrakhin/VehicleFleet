@@ -1,5 +1,11 @@
 package ru.patrakhin.VehicleFleet.dto;
 
+
+import ru.patrakhin.VehicleFleet.models.CarBrand;
+import ru.patrakhin.VehicleFleet.models.EquipmentType;
+import ru.patrakhin.VehicleFleet.models.Vehicles;
+
+
 public class VehiclesDTO {
 
     private int id;
@@ -7,25 +13,22 @@ public class VehiclesDTO {
     private double price;
     private int yearOfManufacture;
     private int mileage;
-    private String equipmentType;
-    private int carBrandId;
+    private EquipmentType equipmentType;
+    private CarBrand carBrand;
 
-    // Конструкторы, геттеры и сеттеры
+    public VehiclesDTO(){}
 
-    public VehiclesDTO() {
-    }
-
-    public VehiclesDTO(int id, String numberVehicle, double price, int yearOfManufacture, int mileage, String equipmentType, int carBrandId) {
+    public VehiclesDTO(int id, String numberVehicle, double price, int yearOfManufacture, int mileage, EquipmentType equipmentType) {
         this.id = id;
         this.numberVehicle = numberVehicle;
         this.price = price;
         this.yearOfManufacture = yearOfManufacture;
         this.mileage = mileage;
         this.equipmentType = equipmentType;
-        this.carBrandId = carBrandId;
     }
 
-    // Геттеры и сеттеры для всех полей
+    public VehiclesDTO(Vehicles vehicles) {
+    }
 
     public int getId() {
         return id;
@@ -67,19 +70,31 @@ public class VehiclesDTO {
         this.mileage = mileage;
     }
 
-    public String getEquipmentType() {
+    public EquipmentType getEquipmentType() {
         return equipmentType;
     }
 
-    public void setEquipmentType(String equipmentType) {
+    public void setEquipmentType(EquipmentType equipmentType) {
         this.equipmentType = equipmentType;
     }
 
-    public int getCarBrandId() {
-        return carBrandId;
+    public CarBrand getCarBrand() {
+        return carBrand;
     }
 
-    public void setCarBrandId(int carBrandId) {
-        this.carBrandId = carBrandId;
+    public void setCarBrand(CarBrand carBrand) {
+        this.carBrand = carBrand;
+    }
+
+    @Override
+    public String toString() {
+        return "Vehicle{" +
+                "id=" + id +
+                ", numberVehicle=" + numberVehicle +
+                ", price=" + price +
+                ", yearOfManufacture=" + yearOfManufacture +
+                ", mileage=" + mileage +
+                ", equipmentType=" + equipmentType +
+                '}';
     }
 }
