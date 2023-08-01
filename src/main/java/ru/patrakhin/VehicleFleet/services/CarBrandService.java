@@ -4,9 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.patrakhin.VehicleFleet.dto.CarBrandDTO;
+import ru.patrakhin.VehicleFleet.models.BrandName;
 import ru.patrakhin.VehicleFleet.models.CarBrand;
+import ru.patrakhin.VehicleFleet.models.CarType;
 import ru.patrakhin.VehicleFleet.repositories.CarBrandRepository;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -79,4 +82,14 @@ public class CarBrandService {
         carBrand.setNumberOfSeats(carBrandDTO.getNumberOfSeats());
         carBrand.setMaxSpeed(carBrandDTO.getMaxSpeed());
     }
+
+    public List<BrandName> getAllBrandNames() {
+        return Arrays.asList(BrandName.values());
+    }
+
+    public List<CarType> getAllCarTypes() {
+        return Arrays.asList(CarType.values());
+    }
+
+
 }

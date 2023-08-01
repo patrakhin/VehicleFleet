@@ -6,7 +6,7 @@
 </head>
 <body>
 <h1>Create Car Brand</h1>
-<form action="/start_page/car_brand" method="post" th:object="${carBrand}">
+<form action="/start_page/create_car_brand" method="post" th:object="${carBrandDTO}">
     <label for="brandName">Brand Name:</label>
     <select id="brandName" name="brandName" required>
         <option th:each="brandName : ${brandNames}" th:value="${brandName}" th:text="${brandName.name()}"></option>
@@ -32,8 +32,9 @@
     <button type="submit">Create</button>
 </form>
 <br/><br/>
-<a th:href="@{/car_brand}">Back to Car Brands</a>
+<a th:href="@{/start_page/car_brand}">Back to Car Brands</a>
 <br/><br/>
 <a th:href="@{/start_page}">Back to Start Page</a>
 </body>
 </html>
+
