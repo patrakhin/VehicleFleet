@@ -5,7 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import ru.patrakhin.VehicleFleet.models.BrandName;
 import ru.patrakhin.VehicleFleet.models.CarBrand;
+import ru.patrakhin.VehicleFleet.models.CarType;
 import ru.patrakhin.VehicleFleet.models.Vehicles;
 import ru.patrakhin.VehicleFleet.services.CarBrandService;
 import ru.patrakhin.VehicleFleet.services.VehicleService;
@@ -19,7 +21,6 @@ import java.util.List;
 public class VehicleController {
 
     private final VehicleService vehicleService;
-
     private final CarBrandService carBrandService;
 
     @Autowired
@@ -33,7 +34,7 @@ public class VehicleController {
         return "start_page";
     }
 
-    @GetMapping("/index")
+    @GetMapping("/index") //пока не редактировал
     public String viewTableVehicles(Model model){
         List<Vehicles> vehicles = vehicleService.findAll();
         model.addAttribute("allVehicles", vehicles);
@@ -46,6 +47,24 @@ public class VehicleController {
         model.addAttribute("carBrands", carBrands);
         return "car_brand";
     }
+
+    @GetMapping("/create_car_brand")
+    public String showCreateCarBrandPage(Model model) {
+        BrandName[] brandNames = BrandName.values();
+        CarType[] carTypes = CarType.values();
+
+        model.addAttribute("brandNames", brandNames);
+        model.addAttribute("carTypes", carTypes);
+
+        return "create_car_brand";
+    }
+
+    @PostMapping("/create_car_brand")
+    public String saveCarBrand(@ModelAttribute("carBrand") CarBrand carBrand) {
+        carBrandService.save(carBrand);
+        return "redirect:/car_brand";
+    }
+
 
     @GetMapping("/edit_car_brand/{id}")
     public String showEditCarBrandPage(@PathVariable int id, Model model) {
@@ -63,17 +82,8 @@ public class VehicleController {
         return "edit_vehicle";
     }
 
-    @GetMapping("/create_car_brand")
-    public String showCreateCarBrandPage(Model model) {
-        model.addAttribute("carBrand", new CarBrand());
-        return "create_car_brand";
-    }
 
-    @PostMapping("/save_car_brand")
-    public String saveCarBrand(@ModelAttribute("carBrand") CarBrand carBrand) {
-        carBrandService.save(carBrand);
-        return "redirect:/car_brand";
-    }
+
 
     @GetMapping("/create_vehicle")
     public String showCreateVehiclePage(Model model) {

@@ -1,18 +1,21 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Create Car Brand</title>
 </head>
 <body>
 <h1>Create Car Brand</h1>
-<form action="/save_car_brand" method="post">
+<form action="/start_page/car_brand" method="post" th:object="${carBrand}">
     <label for="brandName">Brand Name:</label>
-    <input type="text" id="brandName" name="brandName" required /><br/><br/>
+    <select id="brandName" name="brandName" required>
+        <option th:each="brandName : ${brandNames}" th:value="${brandName}" th:text="${brandName.name()}"></option>
+    </select><br/><br/>
 
     <label for="carType">Car Type:</label>
-    <input type="text" id="carType" name="carType" required /><br/><br/>
+    <select id="carType" name="carType" required>
+        <option th:each="carType : ${carTypes}" th:value="${carType}" th:text="${carType.name()}"></option>
+    </select><br/><br/>
 
     <label for="fuelTankVolume">Fuel Tank Volume:</label>
     <input type="number" id="fuelTankVolume" name="fuelTankVolume" required /><br/><br/>
@@ -29,8 +32,8 @@
     <button type="submit">Create</button>
 </form>
 <br/><br/>
-<a href="/car_brand">Back to Car Brands</a>
+<a th:href="@{/car_brand}">Back to Car Brands</a>
 <br/><br/>
-<a href="/start_page">Back to Start Page</a>
+<a th:href="@{/start_page}">Back to Start Page</a>
 </body>
 </html>
