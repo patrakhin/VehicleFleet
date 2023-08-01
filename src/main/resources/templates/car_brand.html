@@ -40,7 +40,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="brand : ${carBrands}">
+    <tr th:each="brand : ${carBrandsList}">
         <td th:text="${brand.id}"></td>
         <td th:text="${brand.brandName}"></td>
         <td th:text="${brand.carType}"></td>
@@ -49,8 +49,8 @@
         <td th:text="${brand.numberOfSeats}"></td>
         <td th:text="${brand.maxSpeed}"></td>
         <td>
-            <a th:href="@{/edit_car_brand/{id}(id=${brand.id})}">Edit</a>
-            <a th:href="@{/delete_car_brand/{id}(id=${brand.id})}">Delete</a>
+            <a th:href="@{/start_page/edit_car_brand/{id}(id=${brand.id})}">Edit</a>
+            <a th:href="@{/start_page/delete_car_brand/{id}(id=${brand.id})}">Delete</a>
         </td>
     </tr>
     </tbody>

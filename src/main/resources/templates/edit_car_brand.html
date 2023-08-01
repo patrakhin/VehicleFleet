@@ -1,17 +1,15 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"
-      lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Edit Car Brand</title>
 </head>
 <body>
 <h1>Edit Car Brand</h1>
-<form action="/save_car_brand" method="post">
-    <input type="hidden" name="id" th:value="${carBrand.id}" />
+<form th:method="POST" th:action="@{/car_brand}" th:object="${carBrandDTO}">
+    <input type="hidden" th:field="*{id}" />
     <label for="brandName">Brand Name:</label>
-    <input type="text" id="brandName" name="brandName" th:value="${carBrand.brandName}" required /><br/><br/>
+    <input type="text" id="brandName" name="brandName" th:field="*{brandName}" required /><br/><br/>
 
     <label for="carType">Car Type:</label>
     <select id="carType" name="carType" required>
@@ -20,23 +18,23 @@
     </select><br/><br/>
 
     <label for="carryingCapacity">Carrying Capacity:</label>
-    <input type="number" id="carryingCapacity" name="carryingCapacity" th:value="${carBrand.carryingCapacity}" required /><br/><br/>
+    <input type="number" id="carryingCapacity" name="carryingCapacity" th:field="*{carryingCapacity}" required /><br/><br/>
 
     <label for="fuelTankVolume">Fuel Tank Volume:</label>
-    <input type="number" id="fuelTankVolume" name="fuelTankVolume" th:value="${carBrand.fuelTankVolume}" required /><br/><br/>
+    <input type="number" id="fuelTankVolume" name="fuelTankVolume" th:field="*{fuelTankVolume}" required /><br/><br/>
 
     <label for="maxSpeed">Max Speed:</label>
-    <input type="number" id="maxSpeed" name="maxSpeed" th:value="${carBrand.maxSpeed}" required /><br/><br/>
+    <input type="number" id="maxSpeed" name="maxSpeed" th:field="*{maxSpeed}" required /><br/><br/>
 
     <label for="numberOfSeats">Number of Seats:</label>
-    <input type="number" id="numberOfSeats" name="numberOfSeats" th:value="${carBrand.numberOfSeats}" required /><br/><br/>
+    <input type="number" id="numberOfSeats" name="numberOfSeats" th:field="*{numberOfSeats}" required /><br/><br/>
 
     <button type="submit">Save</button>
 </form>
 
 <br/><br/>
-<a href="/car_brand">Back to Car Brands</a>
+<a th:href="@{/start_page/car_brand}">Back to Car Brands</a>
 <br/><br/>
-<a href="/start_page">Back to Start Page</a>
+<a th:href="@{/start_page}">Back to Start Page</a>
 </body>
 </html>

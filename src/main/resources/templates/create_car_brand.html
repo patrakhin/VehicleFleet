@@ -6,7 +6,7 @@
 </head>
 <body>
 <h1>Create Car Brand</h1>
-<form action="/start_page/create_car_brand" method="post" th:object="${carBrandDTO}">
+<form th:method="POST" th:action="@{/car_brand}" th:object="${carBrandDTO}">
     <label for="brandName">Brand Name:</label>
     <select id="brandName" name="brandName" required>
         <option th:each="brandName : ${brandNames}" th:value="${brandName}" th:text="${brandName.name()}"></option>
@@ -18,16 +18,16 @@
     </select><br/><br/>
 
     <label for="fuelTankVolume">Fuel Tank Volume:</label>
-    <input type="number" id="fuelTankVolume" name="fuelTankVolume" required /><br/><br/>
+    <input type="number" id="fuelTankVolume" name="fuelTankVolume" th:field="*{fuelTankVolume}" required /><br/><br/>
 
     <label for="carryingCapacity">Carrying Capacity:</label>
-    <input type="number" id="carryingCapacity" name="carryingCapacity" required /><br/><br/>
+    <input type="number" id="carryingCapacity" name="carryingCapacity" th:field="*{carryingCapacity}" required /><br/><br/>
 
     <label for="numberOfSeats">Number of Seats:</label>
-    <input type="number" id="numberOfSeats" name="numberOfSeats" required /><br/><br/>
+    <input type="number" id="numberOfSeats" name="numberOfSeats" th:field="*{numberOfSeats}" required /><br/><br/>
 
     <label for="maxSpeed">Max Speed:</label>
-    <input type="number" id="maxSpeed" name="maxSpeed" required /><br/><br/>
+    <input type="number" id="maxSpeed" name="maxSpeed" th:field="*{maxSpeed}" required /><br/><br/>
 
     <button type="submit">Create</button>
 </form>
@@ -37,4 +37,3 @@
 <a th:href="@{/start_page}">Back to Start Page</a>
 </body>
 </html>
-
