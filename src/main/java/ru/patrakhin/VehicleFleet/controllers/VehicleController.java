@@ -4,81 +4,60 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import ru.patrakhin.VehicleFleet.dto.CarBrandDTO;
 import ru.patrakhin.VehicleFleet.dto.VehiclesDTO;
-import ru.patrakhin.VehicleFleet.models.BrandName;
-import ru.patrakhin.VehicleFleet.models.CarType;
-import ru.patrakhin.VehicleFleet.models.Vehicles;
 import ru.patrakhin.VehicleFleet.services.CarBrandService;
 import ru.patrakhin.VehicleFleet.services.VehicleService;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
 @Controller
-@RequestMapping("/start_page")
+@RequestMapping("/vehicle")
 public class VehicleController {
     private final VehicleService vehicleService;
-    private final CarBrandService carBrandService;
+    /*private final CarBrandService carBrandService;*/
 
     @Autowired
-    public VehicleController(VehicleService vehicleService, CarBrandService carBrandService) {
+    public VehicleController(VehicleService vehicleService) {
         this.vehicleService = vehicleService;
-        this.carBrandService = carBrandService;
     }
 
     @GetMapping()
-    public String showStartPage() {
-        return "start_page";
+    public String showVehicle(Model model) {
+        List<VehiclesDTO> vehiclesDTO = vehicleService.getAllVehicles();
+        model.addAttribute("allVehicles", vehiclesDTO);
+        return "/vehicle";
     }
 
-    // Показать все CarBrand
-    @GetMapping("/car_brand")
-    public String showCarBrands(Model model) {
-        List<CarBrandDTO> carBrandDTOList = carBrandService.getAllCarBrands();
-        model.addAttribute("carBrandsList", carBrandDTOList);
-        return "car_brand";
+    /*@GetMapping("/add_vehicle")
+    public String showAddVehicleForm(Model model) {
+        VehiclesDTO vehiclesDTO = new VehiclesDTO();
+        model.addAttribute("vehiclesDTO", vehiclesDTO);
+        return "create_vehicle"; // Создайте страницу create_vehicle.html
     }
 
-    // Показать форму для создания нового CarBrand
-    @GetMapping("/create_car_brand")
-    public String showCreateCarBrandForm(Model model) {
-        CarBrandDTO carBrandDTO = new CarBrandDTO();
-        model.addAttribute("carBrandDTO", carBrandDTO);
-        model.addAttribute("brandNames", BrandName.values());
-        model.addAttribute("carTypes", CarType.values());
-        return "create_car_brand";
+    @PostMapping("/add_vehicle")
+    public String addVehicle(@ModelAttribute("vehiclesDTO") VehiclesDTO vehiclesDTO) {
+        vehicleService.saveVehicle(vehiclesDTO);
+        return "redirect:/start_page/index";
     }
 
-    // Создать новый CarBrand
-    @PostMapping("/create_car_brand")
-    public String createCarBrand(@ModelAttribute("carBrandDTO") CarBrandDTO carBrandDTO) {
-        carBrandService.saveCarBrand(carBrandDTO);
-        return "redirect:/start_page/car_brand";
+    @GetMapping("/edit_vehicle/{id}")
+    public String showEditVehicleForm(@PathVariable Long id, Model model) {
+        VehiclesDTO vehiclesDTO = vehicleService.getVehicleById(id);
+        model.addAttribute("vehiclesDTO", vehiclesDTO);
+        return "edit_vehicle"; // Создайте страницу edit_vehicle.html
     }
 
-    // Показать форму для редактирования CarBrand
-    @GetMapping("/edit_car_brand/{id}")
-    public String showEditCarBrandForm(@PathVariable("id") int carBrandId, Model model) {
-        CarBrandDTO carBrandDTO = carBrandService.getCarBrandById(carBrandId);
-        model.addAttribute("carBrandDTO", carBrandDTO);
-        model.addAttribute("brandNames", BrandName.values());
-        model.addAttribute("carTypes", CarType.values());
-        return "edit_car_brand";
+    @PostMapping("/edit_vehicle/{id}")
+    public String editVehicle(@PathVariable Long id, @ModelAttribute("vehiclesDTO") VehiclesDTO vehiclesDTO) {
+        vehicleService.updateVehicle(id, vehiclesDTO);
+        return "redirect:/start_page/index";
     }
 
-    // Обновить CarBrand
-    @PostMapping("/edit_car_brand/{id}")
-    public String updateCarBrand(@PathVariable("id") int carBrandId, @ModelAttribute("carBrandDTO") CarBrandDTO updatedCarBrandDTO) {
-        carBrandService.updateCarBrand(carBrandId, updatedCarBrandDTO);
-        return "redirect:/start_page/car_brand";
-    }
-
-    // Удалить CarBrand
-    @GetMapping("/delete_car_brand/{id}")
-    public String deleteCarBrand(@PathVariable("id") int carBrandId) {
-        carBrandService.deleteCarBrand(carBrandId);
-        return "redirect:/start_page/car_brand";
-    }
+    @GetMapping("/delete_vehicle/{id}")
+    public String deleteVehicle(@PathVariable Long id) {
+        vehicleService.deleteVehicle(id);
+        return "redirect:/start_page/index";
+    }*/
 }

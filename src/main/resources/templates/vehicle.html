@@ -1,47 +1,63 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Vehicle Fleet</title>
+    <title>Vehicle List</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
 </head>
 <body>
-<h1>Vehicle Fleet</h1>
 
-<!-- Форма для добавления нового автомобиля -->
-<h2>Add New Vehicle</h2>
-<form action="/vehicles" method="post">
-    <label for="carBrand">Car Brand:</label>
-    <select name="carBrandId" id="carBrand">
-        <option th:each="carBrand : ${carBrands}" th:value="${carBrand.id}" th:text="${carBrand.brandName}"></option>
-    </select>
-    <br>
-    <label for="carType">Car Type:</label>
-    <input type="text" name="carType" id="carType" required>
-    <br>
-    <button type="submit">Add Vehicle</button>
-</form>
+<h1>Vehicles</h1>
 
-<!-- Список всех автомобилей -->
-<h2>All Vehicles</h2>
-<table border="1">
+<table>
+    <thead>
     <tr>
         <th>ID</th>
+        <th>Number Vehicle</th>
+        <th>Price</th>
+        <th>Year of Manufacture</th>
+        <th>Mileage</th>
+        <th>Equipment Type</th>
         <th>Car Brand</th>
-        <th>Car Type</th>
-        <th>Actions</th>
     </tr>
-    <tr th:each="vehicle : ${vehicles}">
-        <td th:text="${vehicle.id}"></td>
-        <td th:text="${vehicle.carBrand.brandName}"></td>
-        <td th:text="${vehicle.equipmentType}"></td>
+    </thead>
+    <tbody>
+    <tr th:each="vehicles : ${allVehicles}">
+        <td th:text="${vehicles.id}"></td>
+        <td th:text="${vehicles.numberVehicle}"></td>
+        <td th:text="${vehicles.price}"></td>
+        <td th:text="${vehicles.yearOfManufacture}"></td>
+        <td th:text="${vehicles.mileage}"></td>
+        <td th:text="${vehicles.equipmentType}"></td>
+        <td th:text="${vehicles.carBrand.brandName}"></td>
         <td>
-            <!-- Ссылка для редактирования автомобиля -->
-            <a th:href="@{/vehicles/{id}/edit(id=${vehicle.id})}">Edit</a>
-            |
-            <!-- Ссылка для удаления автомобиля -->
-            <a th:href="@{/vehicles/{id}/delete(id=${vehicle.id})}" onclick="return confirm('Are you sure?')">Delete</a>
+            <a th:href="@{/edit_vehicle/{id}(id=${vehicles.id})}">Edit</a>
+            <a th:href="@{/delete_vehicle/{id}(id=${vehicles.id})}">Delete</a>
         </td>
     </tr>
+    </tbody>
 </table>
+<a th:href="@{/car_brand}">View Car Brands</a>
+<a th:href="@{/start_page}">Back to Start Page</a>
+<a th:href="@{/create_vehicle}">Add New Vehicle</a>
+
 </body>
 </html>

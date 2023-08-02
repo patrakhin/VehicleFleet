@@ -9,7 +9,10 @@
 <form th:method="POST" th:action="@{/car_brand}" th:object="${carBrandDTO}">
     <input type="hidden" th:field="*{id}" />
     <label for="brandName">Brand Name:</label>
-    <input type="text" id="brandName" name="brandName" th:field="*{brandName}" required /><br/><br/>
+    <select id="brandName" name="brandName" required>
+        <option th:each="type : ${T(ru.patrakhin.VehicleFleet.models.BrandName).values()}"
+                th:value="${type}" th:text="${type}"></option>
+    </select><br/><br/>
 
     <label for="carType">Car Type:</label>
     <select id="carType" name="carType" required>
@@ -33,7 +36,7 @@
 </form>
 
 <br/><br/>
-<a th:href="@{/start_page/car_brand}">Back to Car Brands</a>
+<a th:href="@{/car_brand}">Back to Car Brands</a>
 <br/><br/>
 <a th:href="@{/start_page}">Back to Start Page</a>
 </body>

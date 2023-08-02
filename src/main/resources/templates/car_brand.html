@@ -40,7 +40,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="brand : ${carBrandsList}">
+    <tr th:each="brand : ${carBrandsDTO}">
         <td th:text="${brand.id}"></td>
         <td th:text="${brand.brandName}"></td>
         <td th:text="${brand.carType}"></td>
@@ -49,15 +49,18 @@
         <td th:text="${brand.numberOfSeats}"></td>
         <td th:text="${brand.maxSpeed}"></td>
         <td>
-            <a th:href="@{/start_page/edit_car_brand/{id}(id=${brand.id})}">Edit</a>
-            <a th:href="@{/start_page/delete_car_brand/{id}(id=${brand.id})}">Delete</a>
+            <a th:href="@{/car_brand/edit_car_brand/{id}(id=${brand.id})}">Edit</a>
+            <!--<a th:href="@{/car_brand/{id}(id=${brand.id})}">Delete</a>-->
+            <form th:method="DELETE" th:action="@{/car_brand/{id}(id=${brand.id})}">
+                <input type="submit" value="Delete"/>
+            </form>
         </td>
     </tr>
     </tbody>
 </table>
-<a th:href="@{/start_page/index}">View Vehicles</a>
+<a th:href="@{/vehicle}">View Vehicles</a>
 <a th:href="@{/start_page}">Back to Start Page</a>
-<a th:href="@{/start_page/create_car_brand}">Add New Car Brand</a>
+<a th:href="@{/car_brand/create_car_brand}">Add New Car Brand</a>
 
 </body>
 </html>
