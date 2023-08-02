@@ -27,6 +27,7 @@ public class CarBrandController {
         this.carBrandService = carBrandService;
     }
 
+    //Показать все Vehicles
     @GetMapping()
     public String index(Model model) {
         List<CarBrandDTO> carBrandsDTO = carBrandService.getAllCarBrands();
@@ -34,17 +35,20 @@ public class CarBrandController {
         return "/index";
     }
 
+    //Добавить новый CarBrand (ссылка Add_New_Car_Brand на стр car_brand)
     @GetMapping("/new")
     public String newCarBrand(@ModelAttribute("carBrandDTO") CarBrandDTO carBrandDTO) {
         return "/car_brand";
     }
 
+    //Создать CаrBrand (кнопка Create на стр edit_car_brand))
     @PostMapping()
     public String create(@ModelAttribute("carBrandDTO") CarBrandDTO carBrandDTO) {
         carBrandService.saveCarBrand(carBrandDTO);
         return "redirect:/start_page/car_brand";
     }
 
+    //Переход на форму редактирования edit_car_brand по id (кнопка Edit на стр car_brand)
     @GetMapping("/edit_car_brand/{id}")
     public String edit(Model model, @PathVariable("id") int id) {
         CarBrandDTO carBrandDTO = carBrandService.getCarBrandById(id);
@@ -52,12 +56,14 @@ public class CarBrandController {
         return "car_brand";
     }
 
+    //Обновить CarBrand по id (кнопка Save на стр edit_car_brand)
     @PatchMapping("/{id}")
     public String update(@ModelAttribute("carBrandDTO") CarBrandDTO carBrandDTO, @PathVariable("id") int id) {
         carBrandService.updateCarBrand(id, carBrandDTO);
         return "redirect:/car_brand";
     }
 
+    //Удалить CarBrand по id (кнопка Delete на стр car_brand)
     @DeleteMapping("/{id}")
     public String delete(@PathVariable("id") int id) {
         carBrandService.deleteCarBrand(id);
