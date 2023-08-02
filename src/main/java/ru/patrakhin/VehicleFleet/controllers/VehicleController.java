@@ -25,8 +25,8 @@ public class VehicleController {
     @GetMapping()
     public String showVehicle(Model model) {
         List<VehiclesDTO> vehiclesDTO = vehicleService.getAllVehicles();
-        model.addAttribute("allVehicles", vehiclesDTO);
-        return "/vehicle";
+        model.addAttribute("allVehiclesDTO", vehiclesDTO);
+        return "vehicle";
     }
 
     /*@GetMapping("/add_vehicle")

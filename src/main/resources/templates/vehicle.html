@@ -36,18 +36,16 @@
         <th>Year of Manufacture</th>
         <th>Mileage</th>
         <th>Equipment Type</th>
-        <th>Car Brand</th>
     </tr>
     </thead>
     <tbody>
-    <tr th:each="vehicles : ${allVehicles}">
+    <tr th:each="vehicles : ${allVehiclesDTO}">
         <td th:text="${vehicles.id}"></td>
         <td th:text="${vehicles.numberVehicle}"></td>
         <td th:text="${vehicles.price}"></td>
         <td th:text="${vehicles.yearOfManufacture}"></td>
         <td th:text="${vehicles.mileage}"></td>
         <td th:text="${vehicles.equipmentType}"></td>
-        <td th:text="${vehicles.carBrand.brandName}"></td>
         <td>
             <a th:href="@{/edit_vehicle/{id}(id=${vehicles.id})}">Edit</a>
             <a th:href="@{/delete_vehicle/{id}(id=${vehicles.id})}">Delete</a>

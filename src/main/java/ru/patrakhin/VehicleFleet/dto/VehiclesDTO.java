@@ -28,6 +28,12 @@ public class VehiclesDTO {
     }
 
     public VehiclesDTO(Vehicles vehicles) {
+        this.id = vehicles.getId();
+        this.numberVehicle = vehicles.getNumberVehicle();
+        this.price = vehicles.getPrice();
+        this.yearOfManufacture = vehicles.getYearOfManufacture();
+        this.mileage = vehicles.getMileage();
+        this.equipmentType = vehicles.getEquipmentType();
     }
 
     public int getId() {
