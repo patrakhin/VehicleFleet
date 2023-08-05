@@ -11,7 +11,7 @@
 <form action="/save_vehicle" method="post">
     <label for="carBrand">Car Brand:</label>
     <select id="carBrand" name="carBrand" required>
-        <option th:each="carBrand : ${carBrands}"
+        <option th:each="carBrand : ${carBrandList}"
                 th:value="${carBrand.id}" th:text="${carBrand.brandName}"></option>
     </select><br/><br/>
 
