@@ -105,6 +105,16 @@ public class VehiclesDTO {
         this.carBrands = carBrands;
     }
 
+    public Vehicles toVehicles() {
+        Vehicles vehicles = new Vehicles();
+        vehicles.setId(id);
+        vehicles.setNumberVehicle(numberVehicle);
+        vehicles.setPrice(price);
+        vehicles.setYearOfManufacture(yearOfManufacture);
+        vehicles.setMileage(mileage);
+        vehicles.setEquipmentType(equipmentType);
+        return vehicles;
+    }
 
     @Override
     public String toString() {

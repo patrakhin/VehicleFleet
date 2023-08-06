@@ -52,22 +52,20 @@ public class VehicleController {
         return "redirect:/vehicle";
     }
 
-/////// Остановился здесь
     @GetMapping("/edit_vehicle/{id}")
     public String editVehicleForm(@PathVariable("id") int id, Model model) {
         // Получаем существующее транспортное средство по ID
-        VehiclesDTO vehiclesDTO = vehicleService.getAllVehicles().get(id);
-        model.addAttribute("vehicle", vehiclesDTO);
-        model.addAttribute("equipmentTypes", EquipmentType.values());
+        VehiclesDTO vehiclesDTO = vehicleService.getVehicleById(id);
+        model.addAttribute("allVehiclesDTO", vehiclesDTO);
+        /*List<EquipmentType> equipmentTypeList = vehicleService.getAllEquipmentType();
+        model.addAttribute("equipmentTypes", equipmentTypeList);*/
         return "edit_vehicle";
     }
 
     @PatchMapping("/{id}")
-    public String update(@ModelAttribute("vehicle") VehiclesDTO vehiclesDTO, @PathVariable("id") int id) {
-        Vehicles vehicles = new Vehicles();
-        vehicles = vehiclesDTO;
-        vehicleService.update(id, vehicles);
-        return "redirect:/car_brand";
+    public String update(@ModelAttribute("allVehiclesDTO") VehiclesDTO vehiclesDTO, @PathVariable("id") int id) {
+        vehicleService.updateVehicle(id, vehiclesDTO);
+        return "redirect:/vehicle";
     }
 
     @DeleteMapping("/{id}")

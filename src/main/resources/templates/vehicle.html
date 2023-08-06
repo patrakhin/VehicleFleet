@@ -47,7 +47,7 @@
         <td th:text="${vehicles.mileage}"></td>
         <td th:text="${vehicles.equipmentType}"></td>
         <td>
-            <a th:href="@{vehicle/edit_vehicle/{id}(id=${vehicles.id})}">Edit</a>
+            <a th:href="@{/vehicle/edit_vehicle/{id}(id=${vehicles.id})}">Edit</a>
             <!--<a th:href="@{vehicle/delete_vehicle/{id}(id=${vehicles.id})}">Delete</a>-->
             <form th:method="DELETE" th:action="@{vehicle/{id}(id=${vehicles.id})}">
                 <input type="submit" value="Delete"/>

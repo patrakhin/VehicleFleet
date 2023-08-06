@@ -3,10 +3,15 @@ package ru.patrakhin.VehicleFleet.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.patrakhin.VehicleFleet.dto.CarBrandDTO;
 import ru.patrakhin.VehicleFleet.dto.VehiclesDTO;
+import ru.patrakhin.VehicleFleet.models.BrandName;
+import ru.patrakhin.VehicleFleet.models.CarBrand;
+import ru.patrakhin.VehicleFleet.models.EquipmentType;
 import ru.patrakhin.VehicleFleet.models.Vehicles;
 import ru.patrakhin.VehicleFleet.repositories.VehicleRepository;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -33,16 +38,45 @@ public class VehicleService {
         return foundVehicle.orElse(null);
     }
 
+    private VehiclesDTO convertToDTO(Vehicles vehicle) {
+        VehiclesDTO dto = new VehiclesDTO();
+
+        dto.setId(vehicle.getId());
+        dto.setEquipmentType(vehicle.getEquipmentType());
+        dto.setMileage(vehicle.getMileage());
+        dto.setNumberVehicle(vehicle.getNumberVehicle());
+        dto.setPrice(vehicle.getPrice());
+        dto.setYearOfManufacture(vehicle.getYearOfManufacture());
+        return dto;
+    }
+
+    public VehiclesDTO getVehicleById(int id) {
+        Optional<Vehicles> vehicles = vehicleRepository.findById(id);
+        return vehicles.map(this::convertToDTO).orElse(null);
+    }
+
 
     @Transactional
     public void save(Vehicles vehicles) {
         vehicleRepository.save(vehicles);
     }
 
+
+    private void updateEntityFromDTO(Vehicles vehicle, VehiclesDTO vehiclesDTO) {
+        vehicle.setEquipmentType(vehiclesDTO.getEquipmentType());
+        vehicle.setMileage(vehiclesDTO.getMileage());
+        vehicle.setNumberVehicle(vehiclesDTO.getNumberVehicle());
+        vehicle.setPrice(vehiclesDTO.getPrice());
+        vehicle.setYearOfManufacture(vehiclesDTO.getYearOfManufacture());
+    }
+
     @Transactional
-    public void update(int id, Vehicles updatedVehicles) {
-        updatedVehicles.setId(id);
-        vehicleRepository.save(updatedVehicles);
+    public void updateVehicle(int id, VehiclesDTO updatedVehiclesDTO) {
+        Vehicles vehicle = vehicleRepository.findById(id).orElse(null);
+        if (vehicle != null) {
+            updateEntityFromDTO(vehicle, updatedVehiclesDTO);
+            vehicleRepository.save(vehicle);
+        }
     }
 
     @Transactional
@@ -63,4 +97,9 @@ public class VehicleService {
 
         vehicleRepository.save(newVehicle);
     }
+
+    public List<EquipmentType> getAllEquipmentType() {
+        return Arrays.asList(EquipmentType.values());
+    }
+
 }
