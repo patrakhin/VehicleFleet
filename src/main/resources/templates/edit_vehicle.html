@@ -10,14 +10,15 @@
 <h1>Edit Vehicle</h1>
 <form action="/save_vehicle" method="post">
     <input type="hidden" name="id" th:value="${vehicle.id}" />
-    <label for="carBrand">Car Brand:</label>
-    <select id="carBrand" name="carBrand" required>
-        <option th:each="carBrand : ${carBrands}"
-                th:value="${carBrand}" th:text="${carBrand.brandName}"></option>
-    </select><br/><br/>
 
-    <label for="equipmentType">Equipment Type:</label>
-    <input type="text" id="equipmentType" name="equipmentType" th:value="${vehicle.equipmentType}" required /><br/><br/>
+    <br/><br/>
+
+    <div class="form-group">
+        <label for="equipmentType">Equipment Type:</label>
+        <select class="form-control" id="equipmentType" th:field="*{equipmentTypes}" required>
+            <option th:each="equipmentType : ${equipmentTypes}" th:value="${equipmentType}" th:text="${equipmentType}"></option>
+        </select>
+    </div><br/><br/>
 
     <label for="mileage">Mileage:</label>
     <input type="number" id="mileage" name="mileage" th:value="${vehicle.mileage}" required /><br/><br/>
@@ -35,7 +36,7 @@
 </form>
 
 <br/><br/>
-<a href="/index">Back to Vehicles</a>
+<a href="/vehicle">Back to Vehicles</a>
 <br/><br/>
 <a href="/start_page">Back to Start Page</a>
 </body>

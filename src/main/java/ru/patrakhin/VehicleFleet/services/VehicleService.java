@@ -33,6 +33,7 @@ public class VehicleService {
         return foundVehicle.orElse(null);
     }
 
+
     @Transactional
     public void save(Vehicles vehicles) {
         vehicleRepository.save(vehicles);
@@ -47,5 +48,19 @@ public class VehicleService {
     @Transactional
     public void delete(int id) {
         vehicleRepository.deleteById(id);
+    }
+
+    @Transactional
+    public void addVehicle(VehiclesDTO vehicleDTO) {
+        Vehicles newVehicle = new Vehicles();
+
+        newVehicle.setCarBrand(vehicleDTO.getCarBrand());
+        newVehicle.setEquipmentType(vehicleDTO.getEquipmentType());
+        newVehicle.setMileage(vehicleDTO.getMileage());
+        newVehicle.setNumberVehicle(vehicleDTO.getNumberVehicle());
+        newVehicle.setPrice(vehicleDTO.getPrice());
+        newVehicle.setYearOfManufacture(vehicleDTO.getYearOfManufacture());
+
+        vehicleRepository.save(newVehicle);
     }
 }

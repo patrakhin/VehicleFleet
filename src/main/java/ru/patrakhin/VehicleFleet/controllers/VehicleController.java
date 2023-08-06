@@ -8,6 +8,7 @@ import ru.patrakhin.VehicleFleet.dto.CarBrandDTO;
 import ru.patrakhin.VehicleFleet.dto.VehiclesDTO;
 import ru.patrakhin.VehicleFleet.models.BrandName;
 import ru.patrakhin.VehicleFleet.models.CarType;
+import ru.patrakhin.VehicleFleet.models.EquipmentType;
 import ru.patrakhin.VehicleFleet.models.Vehicles;
 import ru.patrakhin.VehicleFleet.services.CarBrandService;
 import ru.patrakhin.VehicleFleet.services.VehicleService;
@@ -34,6 +35,51 @@ public class VehicleController {
         model.addAttribute("allVehiclesDTO", vehiclesDTO);
         return "vehicle";
     }
+
+    @GetMapping("/create_vehicle")
+    public String addVehicleForm(Model model) {
+        VehiclesDTO vehicleDTO = new VehiclesDTO();
+        vehicleDTO.setCarBrands(carBrandService.getAllCarBrands());
+        model.addAttribute("vehicle", vehicleDTO);
+        model.addAttribute("equipmentTypes", EquipmentType.values());
+        return "create_vehicle";
+    }
+
+    @PostMapping()
+    public String create(@ModelAttribute("vehicleDTO") VehiclesDTO vehicleDTO) {
+        // Вызываем метод сервиса для добавления нового транспортного средства
+        vehicleService.addVehicle(vehicleDTO);
+        return "redirect:/vehicle";
+    }
+
+/////// Остановился здесь
+    @GetMapping("/edit_vehicle/{id}")
+    public String editVehicleForm(@PathVariable("id") int id, Model model) {
+        // Получаем существующее транспортное средство по ID
+        VehiclesDTO vehiclesDTO = vehicleService.getAllVehicles().get(id);
+        model.addAttribute("vehicle", vehiclesDTO);
+        model.addAttribute("equipmentTypes", EquipmentType.values());
+        return "edit_vehicle";
+    }
+
+    @PatchMapping("/{id}")
+    public String update(@ModelAttribute("vehicle") VehiclesDTO vehiclesDTO, @PathVariable("id") int id) {
+        Vehicles vehicles = new Vehicles();
+        vehicles = vehiclesDTO;
+        vehicleService.update(id, vehicles);
+        return "redirect:/car_brand";
+    }
+
+    @DeleteMapping("/{id}")
+    public String deleteVehicle(@PathVariable int id) {
+        // Вызываем метод сервиса для удаления транспортного средства
+        vehicleService.delete(id);
+        return "redirect:/vehicle";
+    }
+
+
+ ////////
+
 
 /*    //Добавить новую Vehicle (ссылка Add_New_Vehicle на стр vehicle) (done)
     @GetMapping("/create_vehicle")

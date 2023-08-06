@@ -5,6 +5,8 @@ import ru.patrakhin.VehicleFleet.models.CarBrand;
 import ru.patrakhin.VehicleFleet.models.EquipmentType;
 import ru.patrakhin.VehicleFleet.models.Vehicles;
 
+import java.util.List;
+
 
 public class VehiclesDTO {
 
@@ -91,6 +93,18 @@ public class VehiclesDTO {
     public void setCarBrand(CarBrand carBrand) {
         this.carBrand = carBrand;
     }
+
+    //дополнительные методы
+    private List<CarBrandDTO> carBrands;
+
+    public List<CarBrandDTO> getCarBrands() {
+        return carBrands;
+    }
+
+    public void setCarBrands(List<CarBrandDTO> carBrands) {
+        this.carBrands = carBrands;
+    }
+
 
     @Override
     public String toString() {
