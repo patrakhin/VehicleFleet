@@ -34,12 +34,14 @@ public class Vehicles {
 
     public Vehicles(){}
 
-    public Vehicles(String numberVehicle, double price, int yearOfManufacture, int mileage, EquipmentType equipmentType) {
+    public Vehicles(String numberVehicle, double price, int yearOfManufacture, int mileage, EquipmentType equipmentType, CarBrand carBrand) {
+
         this.numberVehicle = numberVehicle;
         this.price = price;
         this.yearOfManufacture = yearOfManufacture;
         this.mileage = mileage;
         this.equipmentType = equipmentType;
+        this.carBrand = carBrand;
     }
 
     public int getId() {

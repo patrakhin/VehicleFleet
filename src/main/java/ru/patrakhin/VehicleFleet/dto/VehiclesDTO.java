@@ -16,7 +16,7 @@ public class VehiclesDTO {
     private int yearOfManufacture;
     private int mileage;
     private EquipmentType equipmentType;
-    private CarBrand carBrand;
+    private int carBrand;
 
     public VehiclesDTO(){}
 
@@ -36,6 +36,7 @@ public class VehiclesDTO {
         this.yearOfManufacture = vehicles.getYearOfManufacture();
         this.mileage = vehicles.getMileage();
         this.equipmentType = vehicles.getEquipmentType();
+        this.carBrand = vehicles.getCarBrand().getId();
     }
 
     public int getId() {
@@ -86,20 +87,20 @@ public class VehiclesDTO {
         this.equipmentType = equipmentType;
     }
 
-    public CarBrand getCarBrand() {
+    public int getCarBrand() {
         return carBrand;
     }
 
     public void setCarBrand(CarBrand carBrand) {
-        this.carBrand = carBrand;
+        this.carBrand = carBrand.getId();
     }
 
     //дополнительные методы
     private List<CarBrandDTO> carBrands;
 
-    public List<CarBrandDTO> getCarBrands() {
+   /* public List<CarBrandDTO> getCarBrands() {
         return carBrands;
-    }
+    }*/
 
     public void setCarBrands(List<CarBrandDTO> carBrands) {
         this.carBrands = carBrands;

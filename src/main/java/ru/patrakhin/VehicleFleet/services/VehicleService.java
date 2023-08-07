@@ -88,7 +88,7 @@ public class VehicleService {
     public void addVehicle(VehiclesDTO vehicleDTO) {
         Vehicles newVehicle = new Vehicles();
 
-        newVehicle.setCarBrand(vehicleDTO.getCarBrand());
+        newVehicle.setCarBrand(vehicleDTO.toVehicles().getCarBrand());
         newVehicle.setEquipmentType(vehicleDTO.getEquipmentType());
         newVehicle.setMileage(vehicleDTO.getMileage());
         newVehicle.setNumberVehicle(vehicleDTO.getNumberVehicle());
