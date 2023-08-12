@@ -2,6 +2,7 @@ package ru.patrakhin.VehicleFleet.models;
 
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "vehicle")
@@ -32,9 +33,17 @@ public class Vehicles {
     @JoinColumn(name = "car_brand_id", referencedColumnName = "id")
     private CarBrand carBrand;
 
+    @ManyToOne
+    @JoinColumn(name = "enterprise_id", referencedColumnName = "id")
+    private Enterprises enterprises;
+
+    @OneToMany(mappedBy = "vehicles")
+    private List<VehicleDrivers> vehicleDrivers;
+
     public Vehicles(){}
 
-    public Vehicles(String numberVehicle, double price, int yearOfManufacture, int mileage, EquipmentType equipmentType, CarBrand carBrand) {
+    public Vehicles(String numberVehicle, double price, int yearOfManufacture, int mileage,
+                    EquipmentType equipmentType, CarBrand carBrand, Enterprises enterprises) {
 
         this.numberVehicle = numberVehicle;
         this.price = price;
@@ -42,6 +51,7 @@ public class Vehicles {
         this.mileage = mileage;
         this.equipmentType = equipmentType;
         this.carBrand = carBrand;
+        this.enterprises = enterprises;
     }
 
     public int getId() {
@@ -98,6 +108,22 @@ public class Vehicles {
 
     public void setCarBrand(CarBrand carBrand) {
         this.carBrand = carBrand;
+    }
+
+    public Enterprises getEnterprises() {
+        return enterprises;
+    }
+
+    public void setEnterprises(Enterprises enterprises) {
+        this.enterprises = enterprises;
+    }
+
+    public List<VehicleDrivers> getVehicleDrivers() {
+        return vehicleDrivers;
+    }
+
+    public void setVehicleDrivers(List<VehicleDrivers> vehicleDrivers) {
+        this.vehicleDrivers = vehicleDrivers;
     }
 
     @Override

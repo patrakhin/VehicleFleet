@@ -4,6 +4,7 @@ package ru.patrakhin.VehicleFleet.dto;
 import ru.patrakhin.VehicleFleet.models.CarBrand;
 import ru.patrakhin.VehicleFleet.models.EquipmentType;
 import ru.patrakhin.VehicleFleet.models.Vehicles;
+import ru.patrakhin.VehicleFleet.models.Enterprises;
 
 import java.util.List;
 
@@ -17,10 +18,12 @@ public class VehiclesDTO {
     private int mileage;
     private EquipmentType equipmentType;
     private int carBrand;
+    private int enterprises;
 
     public VehiclesDTO(){}
 
-    public VehiclesDTO(int id, String numberVehicle, double price, int yearOfManufacture, int mileage, EquipmentType equipmentType) {
+    public VehiclesDTO(int id, String numberVehicle, double price, int yearOfManufacture, int mileage,
+                       EquipmentType equipmentType) {
         this.id = id;
         this.numberVehicle = numberVehicle;
         this.price = price;
@@ -37,6 +40,7 @@ public class VehiclesDTO {
         this.mileage = vehicles.getMileage();
         this.equipmentType = vehicles.getEquipmentType();
         this.carBrand = vehicles.getCarBrand().getId();
+        this.enterprises = vehicles.getEnterprises().getId();
     }
 
     public int getId() {
@@ -94,6 +98,22 @@ public class VehiclesDTO {
     public void setCarBrand(CarBrand carBrand) {
         this.carBrand = carBrand.getId();
     }
+
+    public void setCarBrand(int carBrand) {
+        this.carBrand = carBrand;
+    }
+
+    public int getEnterprises() {
+        return enterprises;
+    }
+
+    public void setEnterprises(int enterprises) {
+        this.enterprises = enterprises;
+    }
+
+ /*   public List<CarBrandDTO> getCarBrands() {
+        return carBrands;
+    }*/
 
     //дополнительные методы
     private List<CarBrandDTO> carBrands;
