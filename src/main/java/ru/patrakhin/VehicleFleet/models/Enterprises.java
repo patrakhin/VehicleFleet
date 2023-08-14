@@ -27,6 +27,9 @@ public class Enterprises {
     @OneToMany(mappedBy = "enterprises")
     private List<Vehicles> vehicles;
 
+    @OneToMany(mappedBy = "enterprises")
+    private List<Managers> managers;
+
     public Enterprises(){}
 
     public Enterprises(String enterpriseName, String enterpriseAddress, String enterprisePhone) {
