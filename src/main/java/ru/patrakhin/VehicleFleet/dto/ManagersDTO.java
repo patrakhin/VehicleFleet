@@ -1,29 +1,21 @@
-package ru.patrakhin.VehicleFleet.models;
+package ru.patrakhin.VehicleFleet.dto;
 
-import org.springframework.security.core.userdetails.User;
+import ru.patrakhin.VehicleFleet.models.Enterprises;
+import ru.patrakhin.VehicleFleet.models.Person;
 
-import javax.persistence.*;
 
-@Entity
-@Table(name = "managers")
-public class Managers {
+public class ManagersDTO {
 
-    @Id
-    @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @ManyToOne
-    @JoinColumn(name = "person_id", referencedColumnName = "id")
     private Person person;
 
-    @ManyToOne
-    @JoinColumn (name = "enterprise_id", referencedColumnName = "id")
     private Enterprises enterprises;
 
-    public Managers(){}
+    public ManagersDTO(){}
 
-    public Managers(Person person, Enterprises enterprises) {
+    public ManagersDTO(int id, Person person, Enterprises enterprises) {
+        this.id = id;
         this.person = person;
         this.enterprises = enterprises;
     }
@@ -54,7 +46,7 @@ public class Managers {
 
     @Override
     public String toString() {
-        return "Managers{" +
+        return "ManagersDTO{" +
                 "id=" + id +
                 ", person=" + person +
                 ", enterprises=" + enterprises +

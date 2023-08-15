@@ -5,27 +5,28 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import ru.patrakhin.VehicleFleet.models.Managers;
-import ru.patrakhin.VehicleFleet.repositories.ManagerRepository;
-import ru.patrakhin.VehicleFleet.security.ManagerDetails;
+import ru.patrakhin.VehicleFleet.models.Person;
+import ru.patrakhin.VehicleFleet.repositories.PersonRepository;
+import ru.patrakhin.VehicleFleet.security.PersonDetails;
 
 import java.util.Optional;
 
 @Service
-public class ManagerDetailService implements UserDetailsService {
-    private final ManagerRepository managerRepository;
+public class PersonDetailService implements UserDetailsService {
+
+    private final PersonRepository personRepository;
 
     @Autowired
-    public ManagerDetailService(ManagerRepository managerRepository) {
-        this.managerRepository = managerRepository;
+    public PersonDetailService(PersonRepository personRepository) {
+        this.personRepository = personRepository;
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<Managers> managers = managerRepository.findManagersByName(username);
-        if (managers.isEmpty()){
+        Optional<Person> person = personRepository.findByName(username);
+        if (person.isEmpty()){
             throw new UsernameNotFoundException("User not found!");
         }
-        return new ManagerDetails(managers.get());
+        return new PersonDetails(person.get());
     }
 }

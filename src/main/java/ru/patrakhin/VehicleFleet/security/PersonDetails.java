@@ -2,17 +2,18 @@ package ru.patrakhin.VehicleFleet.security;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import ru.patrakhin.VehicleFleet.models.Managers;
+import ru.patrakhin.VehicleFleet.models.Person;
 
 import java.util.Collection;
 import java.util.Collections;
 
-public class ManagerDetails implements UserDetails {
 
-    private final Managers managers;
+public class PersonDetails implements UserDetails {
 
-    public ManagerDetails(Managers managers) {
-        this.managers = managers;
+    private final Person person;
+
+    public PersonDetails(Person person) {
+        this.person = person;
     }
 
     @Override
@@ -22,12 +23,12 @@ public class ManagerDetails implements UserDetails {
 
     @Override
     public String getPassword() {
-        return this.managers.getPassword();
+        return person.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return this.managers.getName();
+        return person.getName();
     }
 
     @Override
@@ -50,7 +51,5 @@ public class ManagerDetails implements UserDetails {
         return true;
     }
 
-    public Managers getManagers(){
-        return this.managers;
-    }
+    public Person getPerson(){return this.person;}
 }
