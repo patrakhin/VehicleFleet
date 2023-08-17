@@ -8,6 +8,7 @@ import ru.patrakhin.VehicleFleet.dto.DriversDTO;
 import ru.patrakhin.VehicleFleet.dto.EnterprisesDTO;
 import ru.patrakhin.VehicleFleet.dto.ManagersDTO;
 import ru.patrakhin.VehicleFleet.dto.VehiclesDTO;
+import ru.patrakhin.VehicleFleet.models.Enterprises;
 import ru.patrakhin.VehicleFleet.models.Managers;
 import ru.patrakhin.VehicleFleet.models.Person;
 import ru.patrakhin.VehicleFleet.services.DriversService;
@@ -18,7 +19,7 @@ import ru.patrakhin.VehicleFleet.services.VehicleService;
 import java.util.List;
 
 @RestController
-@RequestMapping("manager1")
+@RequestMapping("/manager1")
 public class ManagerOneControllers {
     private final VehicleService vehicleService;
     private final DriversService driversService;
@@ -36,7 +37,7 @@ public class ManagerOneControllers {
 
     @GetMapping("/vehicles")
     public List<VehiclesDTO> getAllVehicles() {
-        return vehicleService.getAllVehicles();
+        return managersService.getVehiclesIdsByEnterprisesId();
     }
 
     @GetMapping("/drivers")
@@ -44,8 +45,6 @@ public class ManagerOneControllers {
 
     @GetMapping("/enterprises")
     public List<EnterprisesDTO> getAllEnterprises(){
-        List<Integer> enterprisesId = managersService.getEnterpriseIdsByPersonId(1);
-        List<EnterprisesDTO> enterprisesDTOList = enterprisesService.getEnterpriseById();
-        return enterprisesService.getAllEnterprises();
+        return managersService.getEnterpriseIdsByPersonId(1);
     }
 }

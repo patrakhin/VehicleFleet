@@ -69,3 +69,50 @@ VALUES
     ('A003IJ', 2400.0, 2020, 11000, 'MAXIMUM', 5),
     ('A004IJ', 3800.0, 2022, 3000, 'PREMIUM', 5),
     ('A005IJ', 3600.0, 2019, 5000, 'SPORT', 5);
+
+
+Чтобы отфильтровать список менеджеров по person_id и получить список enterprise_id,
+вы можете использовать метод filter потока в Java и затем преобразовать отфильтрованные записи в список enterprise_id.
+Вот как это можно сделать:
+
+java
+
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Service
+public class ManagersService {
+    private final ManagerRepository managerRepository;
+
+    public ManagersService(ManagerRepository managerRepository) {
+        this.managerRepository = managerRepository;
+    }
+
+    public List<Long> getEnterpriseIdsByPersonId(Long personId) {
+        List<Managers> managersList = managerRepository.findAll();
+
+        return managersList.stream()
+            .filter(manager -> manager.getPersonId().equals(personId))
+            .map(Managers::getEnterpriseId)
+            .collect(Collectors.toList());
+    }
+}
+
+В этом примере мы используем метод filter, чтобы оставить только записи с заданным person_id,
+затем с помощью метода map извлекаем enterprise_id и собираем их в список с помощью collect.
+Теперь у вас есть метод getEnterpriseIdsByPersonId,
+который позволяет получить список enterprise_id по заданному person_id.
+
+public List<Vehicle> filterVehiclesByEnterprises(List<EnterpriseDTO> enterprisesDTOList, List<Vehicle> allVehicles) {
+    List<Integer> enterpriseIds = enterprisesDTOList.stream()
+        .map(EnterpriseDTO::getId)
+        .collect(Collectors.toList());
+
+    List<Vehicle> filteredVehicles = allVehicles.stream()
+        .filter(vehicle -> enterpriseIds.contains(vehicle.getEnterpriseId()))
+        .collect(Collectors.toList());
+
+    return filteredVehicles;
+}

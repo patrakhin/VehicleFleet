@@ -26,9 +26,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         //конфигурир сам спринг секьюрити и авторизацию
         http.csrf().disable() //откл защ от межсайт поддел запросов
                 .authorizeRequests()                                         //настр
-                .antMatchers("/admin").hasRole("ADMIN")
+                .antMatchers("/manager1/**").hasRole("MANAGER1")
+                .antMatchers("/manager2/**").hasRole("MANAGER2")
                 .antMatchers("/auth/login", "/error").permitAll()    //авторизации
-                .anyRequest().hasAnyRole("USER", "ADMIN")
+                .anyRequest().hasAnyRole("MANAGER1", "MANAGER2")
                 .and()
                 .formLogin().loginPage("/auth/login")
                 .loginProcessingUrl("/process_login")

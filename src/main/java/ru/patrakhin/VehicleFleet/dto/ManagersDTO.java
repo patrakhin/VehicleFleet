@@ -20,6 +20,8 @@ public class ManagersDTO {
         this.enterprises = enterprises;
     }
 
+
+
     public int getId() {
         return id;
     }

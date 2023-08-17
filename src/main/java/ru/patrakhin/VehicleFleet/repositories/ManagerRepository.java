@@ -9,5 +9,5 @@ import java.util.Optional;
 
 @Repository
 public interface ManagerRepository extends JpaRepository<Managers, Integer> {
-    List<Integer> findEnterpriseIdsByPersonId(Integer personId);
+
 }
