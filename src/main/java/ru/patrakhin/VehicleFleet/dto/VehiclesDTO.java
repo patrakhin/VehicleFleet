@@ -107,6 +107,7 @@ public class VehiclesDTO {
         return enterprises;
     }
 
+
     public void setEnterprises(int enterprises) {
         this.enterprises = enterprises;
     }

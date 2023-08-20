@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.patrakhin.VehicleFleet.dto.DriversDTO;
 import ru.patrakhin.VehicleFleet.models.Drivers;
+import ru.patrakhin.VehicleFleet.models.VehicleDrivers;
 import ru.patrakhin.VehicleFleet.repositories.DriverRepository;
 
 import java.util.List;
@@ -31,6 +32,10 @@ public class DriversService {
         return drivers.map(this::convertToDTO).orElse(null);
     }
 
+    /*public List<VehicleDrivers> getListDrivers(){
+        List<VehicleDrivers> vehicleDrivers = driverRepository.getVehicleDrivers();
+    }
+*/
     @Transactional
     public void saveDriver(DriversDTO driversDTO){
         Drivers drivers = convertToEntity(driversDTO);
@@ -68,7 +73,7 @@ public class DriversService {
                 drivers.getId(),
                 drivers.getDriverName(),
                 drivers.getDriverAddress(),
-                drivers.getDriverAddress(),
+                drivers.getDriverPhone(),
                 drivers.getEnterprises().getId()
         );
 
