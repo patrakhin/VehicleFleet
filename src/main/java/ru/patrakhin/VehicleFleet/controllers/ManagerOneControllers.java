@@ -2,8 +2,10 @@ package ru.patrakhin.VehicleFleet.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import ru.patrakhin.VehicleFleet.dto.DriversDTO;
 import ru.patrakhin.VehicleFleet.dto.EnterprisesDTO;
@@ -38,13 +40,16 @@ public class ManagerOneControllers {
     }
 
     @GetMapping("/vehicles")
-    public List<VehiclesDTO> getAllVehicles(Authentication authentication) {
+    @ResponseBody
+    public List<VehiclesDTO> getAllVehicles() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         PersonDetails userDetails = (PersonDetails) authentication.getPrincipal();
         Integer managerId = userDetails.getId();
         return managersService.getVehiclesIdsByEnterprisesId(managerId);
     }
 
     @GetMapping("/drivers")
+    @ResponseBody
     public List<DriversDTO> getAllDrivers(Authentication authentication){
         PersonDetails userDetails = (PersonDetails) authentication.getPrincipal();
         Integer managerId = userDetails.getId();
@@ -52,6 +57,7 @@ public class ManagerOneControllers {
     }
 
     @GetMapping("/enterprises")
+    @ResponseBody
     public List<EnterprisesDTO> getAllEnterprises(Authentication authentication){
         PersonDetails userDetails = (PersonDetails) authentication.getPrincipal();
         Integer managerId = userDetails.getId();
