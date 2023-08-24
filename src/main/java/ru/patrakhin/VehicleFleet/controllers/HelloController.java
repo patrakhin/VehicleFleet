@@ -3,19 +3,21 @@ package ru.patrakhin.VehicleFleet.controllers;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import ru.patrakhin.VehicleFleet.security.PersonDetails;
 
-@Controller
+@RestController
 public class HelloController {
     @GetMapping("/hello")
     public String sayHello() {
         return "hello";
     }
 
-    @GetMapping("/showUserInfo")
-    @ResponseBody
+/*    @GetMapping("/showUserInfo")
+    @ResponseBody*/
+    @RequestMapping(value = "/showUserInfo",
+            produces = "application/json",
+            method= RequestMethod.GET)
     public String showUserInfo() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         PersonDetails personDetails = (PersonDetails) authentication.getPrincipal();
