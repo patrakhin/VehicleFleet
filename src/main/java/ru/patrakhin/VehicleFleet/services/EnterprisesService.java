@@ -8,6 +8,7 @@ import ru.patrakhin.VehicleFleet.models.Enterprises;
 import ru.patrakhin.VehicleFleet.repositories.EnterpriseRepository;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -31,6 +32,13 @@ public class EnterprisesService {
     public EnterprisesDTO getEnterpriseById(int id){
         Optional<Enterprises> enterprises = enterpriseRepository.findById(id);
         return enterprises.map(this::convertToDTO).orElse(null);
+    }
+
+
+    public Enterprises getEnterpriseByName(EnterprisesDTO enterprisesDTO){
+
+        Optional<Enterprises> enterprises1 = enterpriseRepository.findByEnterpriseName(enterprisesDTO.getEnterpriseName());
+        return enterprises1.orElse(null);
     }
 
     @Transactional
