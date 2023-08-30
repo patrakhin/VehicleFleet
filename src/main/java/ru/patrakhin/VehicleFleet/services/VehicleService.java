@@ -3,12 +3,11 @@ package ru.patrakhin.VehicleFleet.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.patrakhin.VehicleFleet.dto.CarBrandDTO;
 import ru.patrakhin.VehicleFleet.dto.VehiclesDTO;
-import ru.patrakhin.VehicleFleet.models.BrandName;
 import ru.patrakhin.VehicleFleet.models.CarBrand;
 import ru.patrakhin.VehicleFleet.models.EquipmentType;
 import ru.patrakhin.VehicleFleet.models.Vehicles;
+import ru.patrakhin.VehicleFleet.repositories.CarBrandRepository;
 import ru.patrakhin.VehicleFleet.repositories.VehicleRepository;
 
 import java.util.Arrays;
@@ -20,10 +19,12 @@ import java.util.stream.Collectors;
 @Transactional(readOnly = true)
 public class VehicleService {
     private final VehicleRepository vehicleRepository;
+    private final CarBrandRepository carBrandRepository;
 
     @Autowired
-    public VehicleService(VehicleRepository vehicleRepository) {
+    public VehicleService(VehicleRepository vehicleRepository, CarBrandRepository carBrandRepository) {
         this.vehicleRepository = vehicleRepository;
+        this.carBrandRepository = carBrandRepository;
     }
 
     public List<VehiclesDTO> getAllVehicles() {
@@ -94,9 +95,10 @@ public class VehicleService {
         newVehicle.setNumberVehicle(vehicleDTO.getNumberVehicle());
         newVehicle.setPrice(vehicleDTO.getPrice());
         newVehicle.setYearOfManufacture(vehicleDTO.getYearOfManufacture());
-
+        newVehicle.setEnterprises(vehicleDTO.toVehicles().getEnterprises());
         vehicleRepository.save(newVehicle);
     }
+
 
     public List<EquipmentType> getAllEquipmentType() {
         return Arrays.asList(EquipmentType.values());

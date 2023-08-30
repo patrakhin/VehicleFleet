@@ -107,6 +107,7 @@ public class ManagersService {
 
     public List<VehiclesDTO> getVehiclesIdsByEnterprisesId(int id) { // added id managers
         List<EnterprisesDTO> enterprisesDTOList1 = getEnterpriseIdsByPersonId(id);
+        System.out.println(enterprisesDTOList1);
         List<Vehicles> vehiclesList = vehicleRepository.findAll();
         System.out.println(vehiclesList);
         List<VehiclesDTO> resultList = new ArrayList<>();
@@ -131,8 +132,8 @@ public class ManagersService {
         dto.setNumberVehicle(vehicle.getNumberVehicle());
         dto.setPrice(vehicle.getPrice());
         dto.setYearOfManufacture(vehicle.getYearOfManufacture());
-        dto.setCarBrand(vehicle.getCarBrand().getId());
-        dto.setEnterprises(vehicle.getEnterprises().getId());
+        dto.setCarBrand(vehicle.getCarBrand());
+        dto.setEnterprises(vehicle.getEnterprises());
         System.out.println("vehicle = " + dto);
         return dto;
     }

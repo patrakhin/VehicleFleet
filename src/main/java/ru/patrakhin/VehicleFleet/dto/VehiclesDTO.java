@@ -17,8 +17,8 @@ public class VehiclesDTO {
     private int yearOfManufacture;
     private int mileage;
     private EquipmentType equipmentType;
-    private int carBrand;
-    private int enterprises;
+    private CarBrand carBrand;
+    private Enterprises enterprises;
 
     public VehiclesDTO(){}
 
@@ -39,8 +39,8 @@ public class VehiclesDTO {
         this.yearOfManufacture = vehicles.getYearOfManufacture();
         this.mileage = vehicles.getMileage();
         this.equipmentType = vehicles.getEquipmentType();
-        this.carBrand = vehicles.getCarBrand().getId();
-        this.enterprises = vehicles.getEnterprises().getId();
+        this.carBrand = vehicles.getCarBrand();
+        this.enterprises = vehicles.getEnterprises();
     }
 
     public int getId() {
@@ -91,7 +91,27 @@ public class VehiclesDTO {
         this.equipmentType = equipmentType;
     }
 
-    public int getCarBrand() {
+    public CarBrand getCarBrand() {
+        return carBrand;
+    }
+
+    public void setCarBrand(CarBrand carBrand) {
+        this.carBrand = carBrand;
+    }
+
+    public Enterprises getEnterprises() {
+        return enterprises;
+    }
+
+    public void setEnterprises(Enterprises enterprises) {
+        this.enterprises = enterprises;
+    }
+
+    public List<CarBrandDTO> getCarBrands() {
+        return carBrands;
+    }
+
+    /*    public int getCarBrand() {
         return carBrand;
     }
 
@@ -110,7 +130,7 @@ public class VehiclesDTO {
 
     public void setEnterprises(int enterprises) {
         this.enterprises = enterprises;
-    }
+    }*/
 
  /*   public List<CarBrandDTO> getCarBrands() {
         return carBrands;
@@ -135,6 +155,8 @@ public class VehiclesDTO {
         vehicles.setYearOfManufacture(yearOfManufacture);
         vehicles.setMileage(mileage);
         vehicles.setEquipmentType(equipmentType);
+        vehicles.setCarBrand(carBrand);
+        vehicles.setEnterprises(enterprises);
         return vehicles;
     }
 

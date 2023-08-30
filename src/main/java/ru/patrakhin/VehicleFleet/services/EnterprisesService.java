@@ -34,6 +34,11 @@ public class EnterprisesService {
         return enterprises.map(this::convertToDTO).orElse(null);
     }
 
+    public Enterprises getEnterprisesById(int id){
+        Optional<Enterprises> enterprises = enterpriseRepository.findById(id);
+        return enterprises.orElse(null);
+    }
+
 
     public Enterprises getEnterpriseByName(EnterprisesDTO enterprisesDTO){
 
