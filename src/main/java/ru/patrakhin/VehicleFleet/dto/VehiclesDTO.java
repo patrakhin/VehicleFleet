@@ -19,8 +19,10 @@ public class VehiclesDTO {
     private EquipmentType equipmentType;
     private CarBrand carBrand;
     private Enterprises enterprises;
+    //private List<CarBrandDTO> carBrands; // Список марок автомобилей
+    //private String carBrandName;
 
-    public VehiclesDTO(){}
+    public VehiclesDTO() {}
 
     public VehiclesDTO(int id, String numberVehicle, double price, int yearOfManufacture, int mileage,
                        EquipmentType equipmentType) {
@@ -42,6 +44,9 @@ public class VehiclesDTO {
         this.carBrand = vehicles.getCarBrand();
         this.enterprises = vehicles.getEnterprises();
     }
+
+
+
 
     public int getId() {
         return id;
@@ -107,45 +112,14 @@ public class VehiclesDTO {
         this.enterprises = enterprises;
     }
 
-    public List<CarBrandDTO> getCarBrands() {
+/*    public List<CarBrandDTO> getCarBrands() {
         return carBrands;
     }
 
-    /*    public int getCarBrand() {
-        return carBrand;
-    }
-
-    public void setCarBrand(CarBrand carBrand) {
-        this.carBrand = carBrand.getId();
-    }
-
-    public void setCarBrand(int carBrand) {
-        this.carBrand = carBrand;
-    }
-
-    public int getEnterprises() {
-        return enterprises;
-    }
-
-
-    public void setEnterprises(int enterprises) {
-        this.enterprises = enterprises;
-    }*/
-
- /*   public List<CarBrandDTO> getCarBrands() {
-        return carBrands;
-    }*/
-
-    //дополнительные методы
-    private List<CarBrandDTO> carBrands;
-
-   /* public List<CarBrandDTO> getCarBrands() {
-        return carBrands;
-    }*/
 
     public void setCarBrands(List<CarBrandDTO> carBrands) {
         this.carBrands = carBrands;
-    }
+    }*/
 
     public Vehicles toVehicles() {
         Vehicles vehicles = new Vehicles();
@@ -160,6 +134,14 @@ public class VehiclesDTO {
         return vehicles;
     }
 
+/*    public String getCarBrandName() {
+        return carBrandName;
+    }
+
+    public void setCarBrandName(String carBrandName) {
+        this.carBrandName = carBrandName;
+    }*/
+
     @Override
     public String toString() {
         return "Vehicle{" +
@@ -170,5 +152,8 @@ public class VehiclesDTO {
                 ", mileage=" + mileage +
                 ", equipmentType=" + equipmentType +
                 '}';
+    }
+
+    public void setCarBrands(List<CarBrandDTO> allCarBrands) {
     }
 }

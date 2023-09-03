@@ -1,5 +1,6 @@
 package ru.patrakhin.VehicleFleet.services;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,10 +19,13 @@ import java.util.stream.Collectors;
 @Transactional(readOnly = true)
 public class CarBrandService {
     private final CarBrandRepository carBrandRepository;
+    private final ModelMapper modelMapper;
 
     @Autowired
-    public CarBrandService(CarBrandRepository carBrandRepository) {
+    public CarBrandService(CarBrandRepository carBrandRepository,
+                           ModelMapper modelMapper) {
         this.carBrandRepository = carBrandRepository;
+        this.modelMapper = modelMapper;
     }
 
     public List<CarBrandDTO> getAllCarBrands() {
@@ -34,6 +38,11 @@ public class CarBrandService {
     public CarBrandDTO getCarBrandById(int id) {
         Optional<CarBrand> carBrand = carBrandRepository.findById(id);
         return carBrand.map(this::convertToDTO).orElse(null);
+    }
+
+    public CarBrand getCarBrandByName(String name){
+        Optional<CarBrand> carBrand = carBrandRepository.findByBrandName(name);
+        return carBrand.orElse(null);
     }
 
     @Transactional

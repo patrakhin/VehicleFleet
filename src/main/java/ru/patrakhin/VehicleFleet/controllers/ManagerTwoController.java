@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.patrakhin.VehicleFleet.dto.DriversDTO;
 import ru.patrakhin.VehicleFleet.dto.EnterprisesDTO;
 import ru.patrakhin.VehicleFleet.dto.VehiclesDTO;
+import ru.patrakhin.VehicleFleet.dto.VehiclesForManagersDTO;
 import ru.patrakhin.VehicleFleet.security.PersonDetails;
 import ru.patrakhin.VehicleFleet.services.DriversService;
 import ru.patrakhin.VehicleFleet.services.EnterprisesService;
@@ -35,7 +36,7 @@ public class ManagerTwoController {
     }
 
     @GetMapping("/vehicles_2")
-    public List<VehiclesDTO> getAllVehicles(Authentication authentication) {
+    public List<VehiclesForManagersDTO> getAllVehicles(Authentication authentication) {
         PersonDetails userDetails = (PersonDetails) authentication.getPrincipal();
         Integer managerId = userDetails.getId();
         return managersService.getVehiclesIdsByEnterprisesId(managerId);

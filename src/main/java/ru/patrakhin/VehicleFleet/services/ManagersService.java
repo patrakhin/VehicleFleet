@@ -3,11 +3,8 @@ package ru.patrakhin.VehicleFleet.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.patrakhin.VehicleFleet.dto.DriversDTO;
-import ru.patrakhin.VehicleFleet.dto.EnterprisesDTO;
-import ru.patrakhin.VehicleFleet.dto.ManagersDTO;
+import ru.patrakhin.VehicleFleet.dto.*;
 
-import ru.patrakhin.VehicleFleet.dto.VehiclesDTO;
 import ru.patrakhin.VehicleFleet.models.*;
 import ru.patrakhin.VehicleFleet.repositories.DriverRepository;
 import ru.patrakhin.VehicleFleet.repositories.EnterpriseRepository;
@@ -105,36 +102,35 @@ public class ManagersService {
         return dto;
     }
 
-    public List<VehiclesDTO> getVehiclesIdsByEnterprisesId(int id) { // added id managers
+    public List<VehiclesForManagersDTO> getVehiclesIdsByEnterprisesId(int id) { // added id managers
         List<EnterprisesDTO> enterprisesDTOList1 = getEnterpriseIdsByPersonId(id);
         System.out.println(enterprisesDTOList1);
         List<Vehicles> vehiclesList = vehicleRepository.findAll();
         System.out.println(vehiclesList);
-        List<VehiclesDTO> resultList = new ArrayList<>();
+        List<VehiclesForManagersDTO> resultList = new ArrayList<>();
         for (EnterprisesDTO enterprisesDTO : enterprisesDTOList1) {
             Integer buf = enterprisesDTO.getId();
             for (Vehicles vehicles : vehiclesList) {
                 System.out.println(vehicles);
                 Integer vehicleBuf = vehicles.getEnterprises().getId();
                 if (Objects.equals(buf, vehicleBuf)) {
-                    resultList.add(convertToDTO(vehicles));
+                    resultList.add(convertToDTOForManager(vehicles));
                 }
             }
         }
         return resultList;
     }
 
-    private VehiclesDTO convertToDTO(Vehicles vehicle) {
-        VehiclesDTO dto = new VehiclesDTO();
+    private VehiclesForManagersDTO convertToDTOForManager(Vehicles vehicle) {
+        VehiclesForManagersDTO dto = new VehiclesForManagersDTO();
         dto.setId(vehicle.getId());
         dto.setEquipmentType(vehicle.getEquipmentType());
         dto.setMileage(vehicle.getMileage());
         dto.setNumberVehicle(vehicle.getNumberVehicle());
         dto.setPrice(vehicle.getPrice());
         dto.setYearOfManufacture(vehicle.getYearOfManufacture());
-        dto.setCarBrand(vehicle.getCarBrand());
-        dto.setEnterprises(vehicle.getEnterprises());
-        System.out.println("vehicle = " + dto);
+        dto.setCarBrandName(String.valueOf(vehicle.getCarBrand().getBrandName()));
+        dto.setEnterprisesName(vehicle.getEnterprises().getEnterpriseName());
         return dto;
     }
 
