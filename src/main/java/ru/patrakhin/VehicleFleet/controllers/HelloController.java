@@ -7,10 +7,11 @@ import org.springframework.web.bind.annotation.*;
 import ru.patrakhin.VehicleFleet.security.PersonDetails;
 
 @RestController
+@RequestMapping("/hello")
 public class HelloController {
-    @GetMapping("/hello")
+    @GetMapping()
     public String sayHello() {
-        return "hello";
+        return "hello user!";
     }
 
 /*    @GetMapping("/showUserInfo")

@@ -11,7 +11,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import ru.patrakhin.VehicleFleet.security.UserSecurityFilter;
 import ru.patrakhin.VehicleFleet.services.PersonDetailService;
 
 
@@ -20,11 +20,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final PersonDetailService personDetailService;
     private final JWTFilter jwtFilter;
+    private final UserSecurityFilter userSecurityFilter;
 
     @Autowired
-    public SecurityConfig(PersonDetailService personDetailService, JWTFilter jwtFilter) {
+    public SecurityConfig(PersonDetailService personDetailService, JWTFilter jwtFilter, UserSecurityFilter userSecurityFilter) {
         this.personDetailService = personDetailService;
         this.jwtFilter = jwtFilter;
+        this.userSecurityFilter = userSecurityFilter;
     }
 
     @Override
@@ -37,6 +39,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()                                         //настр
                 .antMatchers("/manager1/**").hasRole("MANAGER1")
                 .antMatchers("/manager2/**").hasRole("MANAGER2")
+                .antMatchers("/hello").hasRole("USER") //добавил в цепочку юзера
                 .antMatchers("/auth/login", "/error").permitAll()    //авторизации
                 .anyRequest().hasAnyRole("MANAGER1", "MANAGER2")
                 .and()
@@ -47,7 +50,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+        http
+                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
+                // запретили пользователю запросы PUT/POST/DELETE кроме GET на "/hello"
+                .addFilterBefore(userSecurityFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
     // Настраиваем аутентификацию
