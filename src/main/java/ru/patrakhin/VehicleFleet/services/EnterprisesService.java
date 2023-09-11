@@ -39,6 +39,10 @@ public class EnterprisesService {
         return enterprises.orElse(null);
     }
 
+    public Enterprises getEnterpriseByNameForAdmin(String nameEnterprise){
+        Optional<Enterprises> enterprisesForAdmin = enterpriseRepository.findByEnterpriseName(nameEnterprise);
+        return enterprisesForAdmin.orElse(null);
+    }
 
     public Enterprises getEnterpriseByName(EnterprisesDTO enterprisesDTO){
 

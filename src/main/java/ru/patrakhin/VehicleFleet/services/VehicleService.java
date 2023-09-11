@@ -99,6 +99,11 @@ public class VehicleService {
         vehicleRepository.save(newVehicle);
     }
 
+    @Transactional
+    public void addAllVehicles(List<Vehicles> vehicles) {
+        vehicleRepository.saveAll(vehicles);
+    }
+
 
     public List<EquipmentType> getAllEquipmentType() {
         return Arrays.asList(EquipmentType.values());

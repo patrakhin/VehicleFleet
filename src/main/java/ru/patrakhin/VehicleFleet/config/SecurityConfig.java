@@ -11,6 +11,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import ru.patrakhin.VehicleFleet.security.ManagersSecurityFilter;
 import ru.patrakhin.VehicleFleet.security.UserSecurityFilter;
 import ru.patrakhin.VehicleFleet.services.PersonDetailService;
 
@@ -21,12 +22,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final PersonDetailService personDetailService;
     private final JWTFilter jwtFilter;
     private final UserSecurityFilter userSecurityFilter;
+    private final ManagersSecurityFilter managersSecurityFilter;
 
     @Autowired
-    public SecurityConfig(PersonDetailService personDetailService, JWTFilter jwtFilter, UserSecurityFilter userSecurityFilter) {
+    public SecurityConfig(PersonDetailService personDetailService, JWTFilter jwtFilter,
+                          UserSecurityFilter userSecurityFilter, ManagersSecurityFilter managersSecurityFilter) {
         this.personDetailService = personDetailService;
         this.jwtFilter = jwtFilter;
         this.userSecurityFilter = userSecurityFilter;
+        this.managersSecurityFilter = managersSecurityFilter;
     }
 
     @Override
@@ -53,7 +57,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 // запретили пользователю запросы PUT/POST/DELETE кроме GET на "/hello"
-                .addFilterBefore(userSecurityFilter, UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(userSecurityFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(managersSecurityFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
     // Настраиваем аутентификацию
