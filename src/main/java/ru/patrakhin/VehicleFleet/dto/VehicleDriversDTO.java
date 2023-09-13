@@ -22,6 +22,12 @@ public class VehicleDriversDTO {
         this.isActive = isActive;
     }
 
+    public VehicleDriversDTO(Vehicles vehicle, Drivers driver, boolean isActive) {
+        this.vehicles = vehicle;
+        this.drivers = driver;
+        this.isActive = isActive;
+    }
+
     public int getId() {
         return id;
     }

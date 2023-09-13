@@ -40,7 +40,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()//откл защ от межсайт поддел запросов .csrf().disable()
                 //.csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()) // включаем CSRF защиту
                 //.and()// союз и для сцепки настроек (создания цепочки)
-                .authorizeRequests()                                         //настр
+                .authorizeRequests()
+                .antMatchers("/admin/**").hasRole("ADMIN")//настр
                 .antMatchers("/manager1/**").hasRole("MANAGER1")
                 .antMatchers("/manager2/**").hasRole("MANAGER2")
                 .antMatchers("/hello").hasRole("USER") //добавил в цепочку юзера

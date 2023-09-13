@@ -5,13 +5,12 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.patrakhin.VehicleFleet.dto.CarBrandDTO;
+import ru.patrakhin.VehicleFleet.dto.VehicleDriversDTO;
 import ru.patrakhin.VehicleFleet.dto.VehicleGenerationDTO;
-import ru.patrakhin.VehicleFleet.models.CarBrand;
-import ru.patrakhin.VehicleFleet.models.Enterprises;
-import ru.patrakhin.VehicleFleet.models.EquipmentType;
-import ru.patrakhin.VehicleFleet.models.Vehicles;
+import ru.patrakhin.VehicleFleet.models.*;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -22,15 +21,17 @@ public class VehicleGenerationService {
     private final DriversService driversService;
     private final CarBrandService carBrandService;
     private final ModelMapper modelMapper;
+    private final VehicleDriverService vehicleDriverService;
 
     @Autowired
     public VehicleGenerationService(EnterprisesService enterprisesService, VehicleService vehicleService, DriversService driversService, CarBrandService carBrandService,
-                                    ModelMapper modelMapper) {
+                                    ModelMapper modelMapper, VehicleDriverService vehicleDriverService) {
         this.enterprisesService = enterprisesService;
         this.vehicleService = vehicleService;
         this.driversService = driversService;
         this.carBrandService = carBrandService;
         this.modelMapper = modelMapper;
+        this.vehicleDriverService = vehicleDriverService;
     }
 
     public void generateVehicles(VehicleGenerationDTO request) {
@@ -47,7 +48,8 @@ public class VehicleGenerationService {
                 List<Vehicles> vehicles = generateRandomVehicle(enterprise, numberOfVehiclesPerCompany);
                 vehicleService.addAllVehicles(vehicles);
 
-                // Выбираем активных водителей
+                // Выбираем свободных водителей и распределяем их по машинкам в соответствии
+                // с activeDriverIndex (какая по счету машинка должна быть с активным водителем)
                 assignActiveDrivers(vehicles, activeDriverIndex);
             }
         }
@@ -114,6 +116,43 @@ public class VehicleGenerationService {
         Random random = new Random();
         int randomIndex = random.nextInt(values.length);
         return values[randomIndex];
+    }
+
+/*    private void assignActiveDrivers(List<Vehicles> vehicles, int activeDriverIndex) {
+        List<VehicleDriverService> vehicleDriverList = new ArrayList<>();
+
+        for (Vehicles vehicle : vehicles) {
+            //здесь нужен список водителей закрепленных за  конкретным предприятием
+            List<Drivers> driversForVehicle = driversService.getAllDriversByEnterpriseId(vehicle.getEnterprises().getId());
+
+            for (int i = 0; i < driversForVehicle.size(); i++) {
+                Drivers driver = driversForVehicle.get(i);
+                boolean isActive = (i == activeDriverIndex - 1);
+
+                VehicleDriversDTO vehicleDriversDTO = new VehicleDriversDTO(vehicle, driver, isActive);
+                //vehicleDriverList.add(modelMapper.map(vehicleDriversDTO, VehicleDriverService.class));
+                vehicleDriverService.saveVehicleDriver(vehicleDriversDTO);
+            }
+        }
+    }*/
+
+
+    private void assignActiveDrivers(List<Vehicles> vehicles, int activeDriverIndex) {
+        List<VehicleDrivers> vehicleDriversList = new ArrayList<>();
+        Vehicles vehicles1 = vehicles.get(0);
+        List<Drivers> driversForVehicle = driversService.getAllDriversByEnterpriseId(vehicles1.getEnterprises().getId());
+
+        for (Vehicles vehicle : vehicles) {
+            for (int i = 0; i < 2; i++) {
+                if (!driversForVehicle.isEmpty()) {
+                    Drivers driver = driversForVehicle.remove(0); // Получаем и удаляем первого водителя из списка
+                    boolean isActive = (i + 1 == activeDriverIndex); // Проверяем, нужно ли сделать этого водителя активным
+
+                    VehicleDriversDTO vehicleDriversDTO = new VehicleDriversDTO(vehicle, driver, isActive);
+                    vehicleDriverService.saveVehicleDriver(vehicleDriversDTO);
+                }
+            }
+        }
     }
 
 

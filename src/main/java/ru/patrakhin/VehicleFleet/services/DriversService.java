@@ -26,6 +26,9 @@ public class DriversService {
                 .map(DriversDTO::new)
                 .collect(Collectors.toList());
     }
+    public List<Drivers> getAllDriversByEnterpriseId(int id){
+        return driverRepository.findAllByEnterprises_Id(id);
+    }
 
     public DriversDTO getDriverById(int id){
         Optional<Drivers> drivers = driverRepository.findById(id);
