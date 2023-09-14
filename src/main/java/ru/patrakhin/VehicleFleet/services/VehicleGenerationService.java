@@ -137,7 +137,7 @@ public class VehicleGenerationService {
     }*/
 
 
-    private void assignActiveDrivers(List<Vehicles> vehicles, int activeDriverIndex) {
+/*    private void assignActiveDrivers(List<Vehicles> vehicles, int activeDriverIndex) {
         List<VehicleDrivers> vehicleDriversList = new ArrayList<>();
         Vehicles vehicles1 = vehicles.get(0);
         List<Drivers> driversForVehicle = driversService.getAllDriversByEnterpriseId(vehicles1.getEnterprises().getId());
@@ -151,6 +151,41 @@ public class VehicleGenerationService {
                     VehicleDriversDTO vehicleDriversDTO = new VehicleDriversDTO(vehicle, driver, isActive);
                     vehicleDriverService.saveVehicleDriver(vehicleDriversDTO);
                 }
+            }
+        }
+    }*/
+
+    private void assignActiveDrivers(List<Vehicles> vehicles, int activeDriverIndex) {
+        Vehicles vehicles1 = vehicles.get(0);
+        List<Drivers> driversForVehicle = driversService.getAllDriversByEnterpriseId(vehicles1.getEnterprises().getId());
+        boolean isActive = false;
+        int x = 0;
+        for (int j = 0; j < vehicles.size(); j++) {
+            if (x == driversForVehicle.size()){
+                break;
+            }
+            for (int i = 0; i < 2; i++) {
+                    VehicleDriversDTO vehicleDriversDTO;
+
+                    if (j % activeDriverIndex != 0) {
+                        Drivers driver = driversForVehicle.get(x);
+                        vehicleDriversDTO = new VehicleDriversDTO(vehicles.get(j), driver, isActive);
+                        vehicleDriverService.saveVehicleDriver(vehicleDriversDTO);
+                    }
+                    if (j % activeDriverIndex == 0 && i == 0) {
+                        isActive = true;
+                        Drivers driver = driversForVehicle.get(x);
+                        vehicleDriversDTO = new VehicleDriversDTO(vehicles.get(j), driver, isActive);
+                        vehicleDriverService.saveVehicleDriver(vehicleDriversDTO);
+                        x++;
+                        isActive = false;
+                        Drivers driver1 = driversForVehicle.get(x);
+                        vehicleDriversDTO = new VehicleDriversDTO(vehicles.get(j), driver1, isActive);
+                        vehicleDriverService.saveVehicleDriver(vehicleDriversDTO);
+                        x++;
+                        break;
+                    }
+                    x++;
             }
         }
     }
