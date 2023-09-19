@@ -29,4 +29,5 @@ public class AdminGeneratorController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Ошибка при генерации машин.");
         }
     }
+
 }
