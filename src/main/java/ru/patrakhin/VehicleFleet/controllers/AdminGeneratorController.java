@@ -1,23 +1,37 @@
 package ru.patrakhin.VehicleFleet.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import ru.patrakhin.VehicleFleet.dto.VehicleAdminDTO;
 import ru.patrakhin.VehicleFleet.dto.VehicleGenerationDTO;
+import ru.patrakhin.VehicleFleet.dto.VehiclesDTO;
+import ru.patrakhin.VehicleFleet.models.Vehicles;
+import ru.patrakhin.VehicleFleet.repositories.VehicleAdminRepository;
+import ru.patrakhin.VehicleFleet.services.VehicleAdminService;
 import ru.patrakhin.VehicleFleet.services.VehicleGenerationService;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/admin")
 public class AdminGeneratorController {
     private final VehicleGenerationService vehicleGenerationService;
+    private final VehicleAdminRepository vehicleAdminRepository;
+
+    private final VehicleAdminService vehicleAdminService;
 
     @Autowired
-    public AdminGeneratorController(VehicleGenerationService vehicleGenerationService) {
+    public AdminGeneratorController(VehicleGenerationService vehicleGenerationService, VehicleAdminRepository vehicleAdminRepository,
+                                     VehicleAdminService vehicleAdminService) {
         this.vehicleGenerationService = vehicleGenerationService;
+        this.vehicleAdminRepository = vehicleAdminRepository;
+
+        this.vehicleAdminService = vehicleAdminService;
     }
 
     @PostMapping("/generate-vehicles")
@@ -28,6 +42,14 @@ public class AdminGeneratorController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Ошибка при генерации машин.");
         }
+    }
+
+    @GetMapping("/test")
+    public List<VehicleAdminDTO> getTest(
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "size", defaultValue = "10") int size
+    ){
+        return vehicleAdminService.getAdminVehicle(PageRequest.of(page, size));
     }
 
 }
