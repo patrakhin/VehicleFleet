@@ -33,10 +33,14 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public Map<String, String> performLogin(@RequestBody AuthenticationDTO authenticationDTO) {
+    public Map<String, String> performLogin(@RequestParam(name = "username", required = false) String username,
+                                            @RequestParam(name = "password", required = false) String password,
+                                            @RequestBody(required = false) AuthenticationDTO authenticationDTO) {
+        String inputUsername = username != null ? username : authenticationDTO.getUsername();
+        String inputPassword = password != null ? password : authenticationDTO.getPassword();
+
         UsernamePasswordAuthenticationToken authInputToken =
-                new UsernamePasswordAuthenticationToken(authenticationDTO.getUsername(),
-                        authenticationDTO.getPassword());
+                new UsernamePasswordAuthenticationToken(inputUsername, inputPassword);
 
         try {
             authenticationManager.authenticate(authInputToken);
