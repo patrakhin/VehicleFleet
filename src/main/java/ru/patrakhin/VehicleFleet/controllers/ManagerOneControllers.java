@@ -2,11 +2,11 @@ package ru.patrakhin.VehicleFleet.controllers;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
@@ -36,12 +36,13 @@ public class ManagerOneControllers {
     private final ModelMapper modelMapper;
     private final ManagerRepository managerRepository;
     private final CarBrandService carBrandService;
+    private final ManagerPaginationService managerPaginationService;
 
     @Autowired
     public ManagerOneControllers(VehicleService vehicleService, DriversService driversService,
                                  EnterprisesService enterprisesService,
                                  ManagersService managersService, ModelMapper modelMapper,
-                                 ManagerRepository managerRepository, CarBrandService carBrandService) {
+                                 ManagerRepository managerRepository, CarBrandService carBrandService, ManagerPaginationService managerPaginationService) {
         this.vehicleService = vehicleService;
         this.driversService = driversService;
         this.enterprisesService = enterprisesService;
@@ -49,6 +50,7 @@ public class ManagerOneControllers {
         this.modelMapper = modelMapper;
         this.managerRepository = managerRepository;
         this.carBrandService = carBrandService;
+        this.managerPaginationService = managerPaginationService;
     }
 
     @GetMapping("/vehicles")

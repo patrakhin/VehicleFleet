@@ -6,9 +6,14 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.patrakhin.VehicleFleet.dto.*;
-
-import ru.patrakhin.VehicleFleet.models.*;
+import ru.patrakhin.VehicleFleet.dto.DriversDTO;
+import ru.patrakhin.VehicleFleet.dto.EnterprisesDTO;
+import ru.patrakhin.VehicleFleet.dto.ManagersDTO;
+import ru.patrakhin.VehicleFleet.dto.VehiclesForManagersDTO;
+import ru.patrakhin.VehicleFleet.models.Drivers;
+import ru.patrakhin.VehicleFleet.models.Enterprises;
+import ru.patrakhin.VehicleFleet.models.Managers;
+import ru.patrakhin.VehicleFleet.models.Vehicles;
 import ru.patrakhin.VehicleFleet.repositories.DriverRepository;
 import ru.patrakhin.VehicleFleet.repositories.EnterpriseRepository;
 import ru.patrakhin.VehicleFleet.repositories.ManagerRepository;
@@ -22,14 +27,15 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional(readOnly = true)
-public class ManagersService {
+public class ManagerPaginationService {
+
     private final ManagerRepository managerRepository;
     private final EnterpriseRepository enterpriseRepository;
     private final VehicleRepository vehicleRepository;
     private final DriverRepository driverRepository;
 
     @Autowired
-    public ManagersService(ManagerRepository managerRepository, EnterpriseRepository enterpriseRepository,
+    public ManagerPaginationService(ManagerRepository managerRepository, EnterpriseRepository enterpriseRepository,
                            VehicleRepository vehicleRepository, DriverRepository driverRepository) {
         this.managerRepository = managerRepository;
         this.enterpriseRepository = enterpriseRepository;
@@ -82,7 +88,7 @@ public class ManagersService {
             for (Drivers drivers : driversList) {
                 System.out.println(drivers);
                 if (drivers.getEnterprises() != null) {
-                     driverBuf = drivers.getEnterprises().getId();
+                    driverBuf = drivers.getEnterprises().getId();
                 }
                 if (Objects.equals(buf, driverBuf)) {
                     resultDriversList.add(convertDriversToDTO(drivers));
@@ -105,25 +111,28 @@ public class ManagersService {
         return dto;
     }
 
-    public List<VehiclesForManagersDTO> getVehiclesIdsByEnterprisesId(int id) { // added id managers
-        List<EnterprisesDTO> enterprisesDTOList1 = getEnterpriseIdsByPersonId(id);
-        System.out.println(enterprisesDTOList1);
+
+
+    public Page<VehiclesForManagersDTO> getVehiclesIdsByEnterprisesId(int id, int page, int size) {
+        List<EnterprisesDTO> enterprisesDTOList = getEnterpriseIdsByPersonId(id);
         List<Vehicles> vehiclesList = vehicleRepository.findAll();
-        System.out.println(vehiclesList);
         List<VehiclesForManagersDTO> resultList = new ArrayList<>();
-        for (EnterprisesDTO enterprisesDTO : enterprisesDTOList1) {
+
+        for (EnterprisesDTO enterprisesDTO : enterprisesDTOList) {
             Integer buf = enterprisesDTO.getId();
             for (Vehicles vehicles : vehiclesList) {
-                System.out.println(vehicles);
                 Integer vehicleBuf = vehicles.getEnterprises().getId();
                 if (Objects.equals(buf, vehicleBuf)) {
                     resultList.add(convertToDTOForManager(vehicles));
                 }
             }
         }
-        return resultList;
-    }
 
+        int start = Math.min((int) page * size, resultList.size());
+        int end = Math.min(start + size, resultList.size());
+
+        return new PageImpl<>(resultList.subList(start, end), PageRequest.of(page, size), resultList.size());
+    }
 
     private VehiclesForManagersDTO convertToDTOForManager(Vehicles vehicle) {
         VehiclesForManagersDTO dto = new VehiclesForManagersDTO();
