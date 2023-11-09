@@ -11,6 +11,9 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
 import ru.patrakhin.VehicleFleet.security.ManagersSecurityFilter;
 import ru.patrakhin.VehicleFleet.security.UserSecurityFilter;
 import ru.patrakhin.VehicleFleet.services.PersonDetailService;
@@ -31,6 +34,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         this.jwtFilter = jwtFilter;
         this.userSecurityFilter = userSecurityFilter;
         this.managersSecurityFilter = managersSecurityFilter;
+    }
+
+    //added 09.11.23
+    @Bean
+    public CorsFilter corsFilter() {
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        CorsConfiguration config = new CorsConfiguration();
+        config.applyPermitDefaultValues();
+        config.addAllowedOrigin("http://127.0.0.1:5500"); // Разрешаем CORS для этого origin
+        source.registerCorsConfiguration("/**", config);
+        return new CorsFilter(source);
     }
 
     @Override
@@ -56,6 +70,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http
+                .addFilterBefore(corsFilter(), UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 // запретили пользователю запросы PUT/POST/DELETE кроме GET на "/hello"
                 .addFilterBefore(userSecurityFilter, UsernamePasswordAuthenticationFilter.class)
