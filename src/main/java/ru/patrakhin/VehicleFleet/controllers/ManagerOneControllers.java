@@ -7,13 +7,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
-import ru.patrakhin.VehicleFleet.dto.DriversDTO;
-import ru.patrakhin.VehicleFleet.dto.EnterprisesDTO;
-import ru.patrakhin.VehicleFleet.dto.VehiclesDTO;
-import ru.patrakhin.VehicleFleet.dto.VehiclesForManagersDTO;
+import ru.patrakhin.VehicleFleet.dto.*;
 import ru.patrakhin.VehicleFleet.models.Enterprises;
 import ru.patrakhin.VehicleFleet.models.Managers;
 import ru.patrakhin.VehicleFleet.models.Vehicles;
@@ -25,7 +23,7 @@ import ru.patrakhin.VehicleFleet.util.EnterpriseNotCreatedException;
 import ru.patrakhin.VehicleFleet.util.VehicleNotCreatedException;
 
 import java.util.List;
-
+@CrossOrigin(origins = "http://127.0.0.1:5500")
 @RestController
 @RequestMapping("/manager1")
 public class ManagerOneControllers {
@@ -61,6 +59,12 @@ public class ManagerOneControllers {
         int managerId = userDetails.getId();
         return managersService.getVehiclesIdsByEnterprisesId(managerId);
     }
+
+    @GetMapping("/vehicles/car_brand")
+    public List<CarBrandDTO> getAllCarBrand() {
+        return carBrandService.getAllCarBrands();
+    }
+
 
     @PostMapping("/vehicles/new")
     public List <VehiclesForManagersDTO> createNewVehicle(@RequestBody VehiclesDTO vehiclesDTO, BindingResult bindingResult) {
